@@ -1,3 +1,5 @@
+/*
+
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -52,9 +54,13 @@ public class MapScreen implements Screen, InputProcessor
    private Stage mapstage;
    private InputMultiplexer multiplexer;
    MyActor myactor;
+   
+   MyGame mygame;
+   float W;
+   float H;
   // private Texture box;
    
-   public MapScreen(enlightenment game)
+   public MapScreen(enlightenment game, MyGame mygame)
    {
 	   
 	   atlas = new TextureAtlas("menusprites.txt");
@@ -63,14 +69,19 @@ public class MapScreen implements Screen, InputProcessor
 	   mainTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	   
 	   float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
+	   float h = Gdx.graphics.getHeight();
 	   this.game = game;
+	   
+	   //
+	   W = w;
+	   H = h;	   
+	   //
 	   
 	   camera = new OrthographicCamera();
 	   camera.setToOrtho(false,w,h);
 	   camera.update();
 	   
-	   tiledMap = new TmxMapLoader().load("design project.tmx");
+	   tiledMap = new TmxMapLoader().load("designproject.tmx");
 	   tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		
        texture = new Texture(Gdx.files.internal("pukichow.png"));
@@ -208,7 +219,6 @@ public boolean keyDown(int keycode)
 @Override
 public boolean keyUp(int keycode) 
 {
-	
 	return false;
 }
 
@@ -229,6 +239,21 @@ public boolean touchDown(int screenX, int screenY, int pointer, int button)
     Vector3 position = camera.unproject(clickCoordinates);
     sprite.setPosition(position.x, position.y);
     return true;
+}
+
+public Tile location(int screenX, int screenY)
+{
+	float height_tiles = mygame.map.length;
+	float width_tiles = mygame.map.height;
+	int xFactor = (int) (W/width_tiles);//int cast so that it fits map perameters
+	int yFactor= (int) (H/height_tiles);
+	
+	int x = screenX/xFactor;
+	int y = screenY/yFactor;
+	
+	System.out.println("X: " + x + " and Y:" + y);
+	
+	return mygame.map.tiles[x][y];
 }
 
 @Override
@@ -259,4 +284,215 @@ public boolean scrolled(float amountX, float amountY)
 
     
 
+}
+
+
+
+
+
+
+
+
+
+
+
+*/
+
+package com.mygdx.game;
+
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
+
+public class MapScreen implements Screen, InputProcessor
+{
+	int i = 0;
+	MyGame mygame;
+    Texture img;
+    TiledMap tiledMap;
+    OrthographicCamera camera;
+   TiledMapRenderer tiledMapRenderer;
+    SpriteBatch sb;
+    Texture texture;
+    Sprite sprite;
+   enlightenment game;
+   
+   float W;
+   float H;
+   
+   public MapScreen(enlightenment game, MyGame g)
+   {
+	   float w = Gdx.graphics.getWidth();
+	   float h = Gdx.graphics.getHeight();
+	   this.game = game;
+	   
+	   W = w;
+	   H = h;
+	   
+	   camera = new OrthographicCamera();
+	   camera.setToOrtho(false,w,h);
+	   camera.update();
+	   
+		tiledMap = new TmxMapLoader().load("designproject.tmx");
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+		
+       sb = new SpriteBatch();
+       texture = new Texture(Gdx.files.internal("pukichow.png"));
+       sprite = new Sprite(texture);
+       mygame = g;    	
+       mygame.AddEntity(20.0, 20.0, 3, g.map.tiles[1][1], "Player 1", texture);
+       
+       //visualmap v = new visualmap();     
+   }
+   
+@Override
+//called once
+public void show() {
+	// TODO Auto-generated method stub
+	Gdx.input.setInputProcessor(this);
+	
+}
+@Override
+//called repeatedly, ~60 frames / sec
+public void render(float delta) 
+{	
+	Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
+    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    camera.update();
+    tiledMapRenderer.setView(camera);
+    tiledMapRenderer.render();
+    sb.setProjectionMatrix(camera.combined);
+    //stage.act(), stage.draw();
+    sb.begin();
+    sprite.draw(sb);
+    sb.end();
+    mygame.drawSprite(0);
+    mygame.setSprite(0, i, i);
+    i++;        	
+}
+@Override
+public void resize(int width, int height) {
+	// TODO Auto-generated method stub
+	
+}
+@Override
+public void pause() {
+	// TODO Auto-generated method stub
+	
+}
+@Override
+public void resume() {
+	// TODO Auto-generated method stub
+	
+}
+@Override
+public void hide() {
+	// TODO Auto-generated method stub
+	
+}
+@Override
+public void dispose() 
+{
+	sb.dispose();
+}
+
+@Override
+public boolean keyDown(int keycode) 
+{
+	if(keycode == Input.Keys.LEFT)
+        camera.translate(-32,0);
+    if(keycode == Input.Keys.RIGHT)
+        camera.translate(32,0);
+    if(keycode == Input.Keys.UP)
+        camera.translate(0,32);
+    if(keycode == Input.Keys.DOWN)
+        camera.translate(0,-32);
+    if(keycode == Input.Keys.NUM_1)
+        tiledMap.getLayers().get(0).setVisible(!tiledMap.getLayers().get(0).isVisible());
+	return false;
+}
+
+@Override
+public boolean keyUp(int keycode) 
+{
+	return false;
+}
+
+@Override
+public boolean keyTyped(char character) {
+	// TODO Auto-generated method stub
+	return false;
+}
+
+@Override
+public boolean touchDown(int screenX, int screenY, int pointer, int button) 
+{
+	int X = screenX/48;
+	X = X * 48;
+	int Y = screenY/34;
+	Y = Y * 34 + 34;
+    Vector3 clickCoordinates = new Vector3(X,Y,0);
+    Vector3 position = camera.unproject(clickCoordinates);
+    sprite.setPosition(position.x, position.y);
+    location(X, Y);
+    return true;
+}
+
+public Tile location(int screenX, int screenY)
+{
+	int width_tiles = 48;
+	int height_tiles = 34;
+	int xFactor = (int) (W/width_tiles);//int cast so that it fits map perameters
+	int yFactor= (int) (H/height_tiles);
+	
+	int x = (screenX/width_tiles);
+	int y =  (screenY/height_tiles) - 1;
+	
+	System.out.println("X: " + x + " and Y:" + y);
+	
+	return mygame.map.tiles[x][y];
+}
+
+@Override
+public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+	// TODO Auto-generated method stub
+	return false;
+}
+
+@Override
+public boolean touchDragged(int screenX, int screenY, int pointer) {
+	// TODO Auto-generated method stub
+	return false;
+}
+
+@Override
+public boolean mouseMoved(int screenX, int screenY) {
+	// TODO Auto-generated method stub
+	return false;
+}
+
+@Override
+public boolean scrolled(float amountX, float amountY) 
+{
+	camera.zoom = camera.zoom+amountY;
+	camera.update();
+	return false;
+}
+
+
+
+ 
 }
