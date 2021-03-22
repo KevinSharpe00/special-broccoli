@@ -184,6 +184,9 @@
             <key type="filename">../../../Downloads/BrownMenu.png</key>
             <key type="filename">../../../Downloads/Brownbox.png</key>
             <key type="filename">../../../Downloads/brownsword.png</key>
+            <key type="filename">PersonButton.png</key>
+            <key type="filename">brownclock.png</key>
+            <key type="filename">hammerbutton.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -204,6 +207,9 @@
             <filename>../../../Downloads/brownsword.png</filename>
             <filename>../../../Downloads/BrownMenu.png</filename>
             <filename>../../../Downloads/Brownbox.png</filename>
+            <filename>hammerbutton.png</filename>
+            <filename>PersonButton.png</filename>
+            <filename>brownclock.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
