@@ -11,14 +11,13 @@ public class MyGame {
 	Nation[] N = new Nation[4];
 	public int turn;
 	SpriteBatch sprite_batch;
-	public Vector <Entity> entities = new Vector<Entity>();
+	public Vector<Entity> entities = new Vector<Entity>();
 	int entity_counter = 0;
 	
 	public MyGame()
 	{
-		
 		sprite_batch = new SpriteBatch();
-		map = new Map(10, 10);
+		map = new Map(40, 30);
 		//
 		Nation P1 = new Nation();
 		Nation P2 = new Nation();
@@ -71,8 +70,8 @@ public class MyGame {
 		}
 	}
 	
-	/////////////new Entity Stuff
-	
+
+	//entity stuff
 	public void EntityPrint(int l)
 	{
 		entities.get(l).printInfo();
@@ -108,7 +107,7 @@ public class MyGame {
 		{
 			for(int j = 0; j < entity_counter; j++)
 			{
-				if(entities.get(j).commander == entities.get(j).commander && j != l)
+				if(entities.get(j).commander == entities.get(l).commander && j != l)
 				{//	current unit has the same commander as input unit
 					move = false;
 					System.out.println("Bad move");
@@ -143,7 +142,6 @@ public class MyGame {
 				if(B.health <= 0)
 				{//death check
 					B.commander = "Dead";
-					B.damage = 0;
 				}
 				return;
 			}
@@ -168,23 +166,20 @@ public class MyGame {
 				
 			}
 		}
-		ShiftEntities();
 	}
-
 	
 	
 	
 	public void ShiftEntities()
 	{
-		for(int i = 0; i < entities.size(); i++)
+		for(int i = 0; i < entity_counter; i++)
 		{
-			if(entities.get(i).commander == "Dead" || entities.get(i).health <= 0)
+			if(entities.get(i).commander == "Dead" || entities.get(i).damage == 0)
 			{
 				entities.remove(i);
 			}
 		}
 	}
-
 	
 	
 	
@@ -195,7 +190,8 @@ public class MyGame {
 	
 	
 	
-	/////////////new Nation stuff
+	
+	///////////// Nation stuff
 	
 	public void AddMoney(int m)
 	{
@@ -240,7 +236,7 @@ public class MyGame {
 			turn = 0;
 		}
 	}
-	//added new/////////////////////////////////////////////////////////////
+
 	public void setSprite(int i, float x, float y)
 	{
 		entities.get(i).setspritepos(x, y);
