@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 enum landscapes
 {
-	plains, mountains, impassible
+	plains, hills, mountains, water
 }
 
 enum buildings
@@ -20,8 +20,8 @@ public class Tile {
 	boolean locked = false;
 	landscapes l;
 	buildings[] b = new buildings[3];
-	//test character for printing from game
-	char test;
+	//terr character for printing from game
+	char terr;
 	
 	
 	
@@ -44,23 +44,51 @@ public class Tile {
 	{
 		ipos = i;
 		jpos = j;
-		if(land == "impassible")
+		if(land == "water")
 		{
-			test = 'i';
-			l = landscapes.impassible;
+			terr = 'w';
+			l = landscapes.water;
 		}
 		else if(land == "mountains")
 		{
-			test = 'm';
+			terr = 'm';
 			l = landscapes.mountains;
 		}
+		else if(land == "hills")
+		{
+			terr = 'h';
+			l = landscapes.hills;
+		}
 		else
-			{
-			test = 'p';
+		{
+			terr = 'p';
 			l = landscapes.plains;
-			}
+		}
 	}
 	
+	void setland(char t)
+	{
+		if(t == 'w')
+		{
+			terr = 'w';
+			l = landscapes.water;
+		}
+		else if(t == 'm')
+		{
+			terr = 'm';
+			l = landscapes.mountains;
+		}
+		else if(t == 'h')
+		{
+			terr = 'h';
+			l = landscapes.hills;
+		}
+		else
+		{
+			terr = 'p';
+			l = landscapes.plains;
+		}
+	}
 	
 	
 	

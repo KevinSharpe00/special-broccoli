@@ -17,6 +17,7 @@ public class Entity //does it extend or implement something?
     Tile position;
     String commander;
     boolean exhausted;
+    
 	Texture tex;
     Sprite sprite;
     
@@ -31,7 +32,6 @@ public class Entity //does it extend or implement something?
         tex = t;
         sprite = new Sprite(tex);
         exhausted = false;
-        
     }
     
     boolean Move(Tile T)
@@ -46,6 +46,7 @@ public class Entity //does it extend or implement something?
     
     boolean MoveCheck(Tile T)
     {
+    	//distance chack
     	int dx = position.ipos - T.ipos;
     	int dy = position.jpos - T.jpos;
     	//make both positive;
@@ -61,6 +62,13 @@ public class Entity //does it extend or implement something?
     	if(dx+dy > range)
     	{
     		System.out.println("Too Far");
+    		return false;
+    	}
+    	
+    	//water check
+    	if(T.terr == 'w')
+    	{
+    		System.out.println("I don't have my goggles, not going for a swim");
     		return false;
     	}
     
