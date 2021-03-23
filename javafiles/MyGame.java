@@ -9,31 +9,27 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class MyGame {
 
 	Map map;
-	Nation[] N = new Nation[4];
+	Nation[] N = new Nation[2];
 	public int turn;
 	SpriteBatch sb;
 	public Vector<Entity> entities = new Vector<Entity>();
 	int entity_counter = 0;
+	MyGame thisgame;
+	AI ai;
 	
 	public MyGame()
 	{
+		thisgame = this;
 		//sprite_batch = new SpriteBatch();
 		map = new Map(40, 30);
-		//TODO: make 4 player
+		
 		Nation P1 = new Nation();
 		Nation P2 = new Nation();
-		//Nation P3 = new Nation();
-		//Nation P4 = new Nation();
 		N = new Nation[2];
 		N[0] = P1;
 		N[1] = P2;
-		//N[2] = P3;
-		//N[3] = P4;
 		
 		turn = 0;
-		
-		
-		
 		
 	}
 	
@@ -58,7 +54,9 @@ public class MyGame {
 	
 	/*
 	 * prints the map on the console
+	 * for testing
 	 */
+	/*
 	public void MapPrint()
 	{
 		for(int n = 0; n < map.height; n++)
@@ -69,7 +67,7 @@ public class MyGame {
 			}
 			System.out.println();
 		}
-	}
+	}*/
 	
 	/////////////new Entity Stuff
 	
@@ -147,20 +145,19 @@ public class MyGame {
 			if(A.getCommander() != B.getCommander())
 			{
 				A.hurt(B.getdamage());
-				
-				if(B.health <= 0)
-				{//death check
-					//update for when more than one player
-					if(B.commander == "Player 1")
-					{
-						N[0].addUnitUpkeep(-1);
-					}
-					else
-					{
-						N[1].addUnitUpkeep(-1);
-					}
-					B.commander = "Dead";
-					B.damage = 0;
+				if(A.health <= 0)
+				{	
+					 if(A.commander == "Player 1")
+	                    {
+	                        N[0].addUnitUpkeep(-1);
+	                    }
+	                    else
+	                    {
+	                        N[1].addUnitUpkeep(-1);
+	                    }
+					A.commander = "Dead";
+					A.damage = 0;
+					A.Tired();
 				}
 				return;
 			}
@@ -195,7 +192,8 @@ public class MyGame {
 		{
 			if(entities.get(i).commander == "Dead" || entities.get(i).damage == 0)
 			{
-				
+				EntityActor.deathcheck();
+				AIActor.deathcheck();
 				entities.remove(i);
 				i--;
                 entity_counter--;
@@ -253,7 +251,7 @@ public class MyGame {
 	{
 		N[turn].endturn();
 		turn++;
-		if(turn == 2)//change to 4 if more players are added
+		if(turn == 2)
 		{
 			turn = 0;
 		}
@@ -265,6 +263,8 @@ public class MyGame {
 		//check for battles
 		endTurnBattles();
 		ShiftEntities();
+		this.ai = MapScreen.ai;
+		ai.AISimpleCheck();
 	}
 	
 	//move sprite

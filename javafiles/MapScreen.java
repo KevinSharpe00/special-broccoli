@@ -14,20 +14,25 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -41,9 +46,8 @@ public class MapScreen implements Screen
     TiledMap tiledMap;
    public static OrthographicCamera camera;
    TiledMapRenderer tiledMapRenderer;
-    static SpriteBatch sb;
- 
-    static SpriteBatch batch;
+    SpriteBatch sb;
+    SpriteBatch batch;
     Texture texture;
     Sprite sprite;
    enlightenment game;
@@ -58,6 +62,8 @@ public class MapScreen implements Screen
    EntityActor entityactor;
    MyActor myactor;
    static MyGame mygame;
+   Label label;
+   static AI ai;
   // private Texture box;
    
    public MapScreen(enlightenment game, MyGame mg)
@@ -81,15 +87,14 @@ public class MapScreen implements Screen
 	   tiledMap = new TmxMapLoader().load("testmap.tmx");
 	   tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		
-	   	   
-	   
-       texture = new Texture(Gdx.files.internal("blueswordman.png"));
-       mygame.AddEntity(20, 20, 11, mygame.map.tiles[10][10], "Player 2", texture);
+       texture = new Texture(Gdx.files.internal("orangeswordsman.png"));
+       mygame.AddEntity(40, 20, 10, mygame.map.tiles[10][10], "Player 1", texture);
        entityactor = new EntityActor(mygame.entities.get(0), "sword 1");
        //change type later
 	   //TODO: add ai castle
        Texture castlegraphic = new Texture(Gdx.files.internal("castle.png"));
        CastleBase castle = new CastleBase(castlegraphic,"base1");
+       
        
        blocky = new BitmapFont(Gdx.files.internal("blocky.fnt"));
        
@@ -108,25 +113,43 @@ public class MapScreen implements Screen
        mapcamera.position.set(mapcamera.viewportWidth / 2, mapcamera.viewportHeight / 2, 0);
        mapcamera.update();
        
-       sb = new SpriteBatch();
+
        batch = new SpriteBatch();
        //stage currently doesn't work??
        stage = new Stage(uiview, batch);
        mapstage = new Stage(viewport, batch);
        //not tooooo sure about this line, change to be like other stuff if it dont work
        //mapstage = new Stage(new ScreenViewport());
+      
        
-      
-      
+       
+       
+       
+       
+       //money label stuff
+       BitmapFont font = new BitmapFont();
+       Texture te = new Texture(Gdx.files.internal("Brownbox.png"));
+      TextureRegionDrawable t = new TextureRegionDrawable(new TextureRegion(te));
+       
+      //money label
+       Label.LabelStyle style = new LabelStyle();
+       style.background = t; // Set the drawable you want to use
+       style.font = font;
+       	
+       label = new Label("   Money: " + String.valueOf(mygame.N[0].money) +"       "  , style);
+       stage.addActor(label);
+       //label.setText("   Money: " + String.valueOf(mygame.N[0].money) +"   ");
+       
        multiplexer = new InputMultiplexer();
        multiplexer.addProcessor(stage);
        multiplexer.addProcessor(mapstage);
        InputProcessor mapmove = new MapInputHandler();
        multiplexer.addProcessor(mapmove);
        mapstage.addActor(entityactor);
+       entityactor.unrestrictedMove(160, 160);
        mapstage.addActor(castle);
        castle.spritePos(128, 32);
-       entityactor.unrestrictedMove(160, 160);
+       ai = new AI(mygame);
    }
    
 @Override
@@ -141,12 +164,12 @@ public void show()
     mainTable.right().bottom();
 	
     //TODO:Change this graphic to end turn button once the asset is created
-    final ImageButtonStyle clkbutton = UImanager.configbutton(skin, "brownclock");
+    final ImageButtonStyle swbutton = UImanager.configbutton(skin, "brownclock");
     
-    ImageButton turnbutton = new ImageButton(clkbutton);
+    ImageButton swordbutton = new ImageButton(swbutton);
     
     
-    turnbutton.addListener(new ClickListener(){
+    swordbutton.addListener(new ClickListener(){
         @Override
         public void clicked(InputEvent event, float x, float y) 
         {
@@ -154,34 +177,47 @@ public void show()
         	System.out.print("Current turn:  " );
         	System.out.print(mygame.turn);
         	System.out.println();
-        	System.out.print("Player money:  " );
-        	System.out.println(mygame.N[0].money);
-        	
+        	//temporary
+        	Array<Actor> stageActors = mapstage.getActors();
+        	int i = 0;
+        	while(i<stageActors.size)
+        	{
+        		Actor a = stageActors.get(i);
+        		a.toString();
+        		Gdx.app.log("actor: ", a.toString());
+        		 i=i+1;
+        	}
         }
     });
    
-    mainTable.add(turnbutton);
+    mainTable.add(swordbutton);
     stage.addActor(mainTable);
     
 }
+
 @Override
 //called repeatedly, ~60 frames / sec
 public void render(float delta) 
 {
 	
 	Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
-    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+	Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     camera.update();
     tiledMapRenderer.setView(camera);
     tiledMapRenderer.render();
     
+    //batch.setProjectionMatrix(camera.combined);
+    //batch.begin();
+    //font.draw(batch,"Money: "+ String.valueOf(mygame.N[0].money),20,20);
+    //batch.end();
     
+    //awful terrible code done in awful terrible place so that the label updates.
+    label.setText("   Money: " + String.valueOf(mygame.N[0].money) + "     ");
     stage.act();
     mapstage.act();
-    stage.draw();
     mapstage.draw();
-    
+    stage.draw();
 }
 @Override
 public void resize(int width, int height) 
@@ -216,6 +252,8 @@ public void dispose()
 	skin.dispose();
 	atlas.dispose();
 }
+
+
 
 
 }

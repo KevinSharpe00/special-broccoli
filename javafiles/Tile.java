@@ -7,7 +7,7 @@ enum landscapes
 
 enum buildings
 {
-	church, castle, base
+	market, castle, base
 }
 
 
@@ -103,9 +103,9 @@ public class Tile {
 	boolean AddBuilding(String build)
 	{
 		boolean ret = false;
-		if(build == "church")
+		if(build == "market")
 		{
-			b[0] = buildings.church;
+			b[0] = buildings.market;
 			ret = true;
 		}
 		else if(build == "castle")

@@ -46,7 +46,6 @@ public class Entity //does it extend or implement something?
     
     boolean MoveCheck(Tile T)
     {
-    	//distance chack
     	int dx = position.ipos - T.ipos;
     	int dy = position.jpos - T.jpos;
     	//make both positive;
@@ -64,14 +63,12 @@ public class Entity //does it extend or implement something?
     		System.out.println("Too Far");
     		return false;
     	}
-    	
     	//water check
     	if(T.terr == 'w')
     	{
     		System.out.println("I don't have my goggles, not going for a swim");
     		return false;
     	}
-    
     		return true;
     }
     

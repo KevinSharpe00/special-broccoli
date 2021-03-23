@@ -13,37 +13,23 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.Array;
 
-public class EntityActor extends Actor
+public class AIActor extends Actor
 {
 	Action action;
 	Entity entity;
-	static Array<EntityActor> entityActors = new Array<EntityActor>();
-	EntityActor current;
+	static Array<AIActor> AIActors = new Array<AIActor>();
+	AIActor current;
 	 
 	//maybe inherit and change a bit to do different things on touch???
-	  public EntityActor(Entity e, final String actorName) 
+	  public AIActor(Entity e, final String actorName) 
 	  {
 		current = this;
 		entity = e;
 		spriteSet(entity.sprite.getX(), entity.sprite.getY());
-		setTouchable(Touchable.enabled);
-		//this work?/??GER?GETRG????
-		entityActors.add(current);
+		setTouchable(Touchable.disabled);
 		
-		addListener(new InputListener() 
-		{
-		  @Override
-		  public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) 
-		  {
-			 
-
-				  Gdx.app.log("Touch down asset with name ", actorName);
-				  MapInputHandler.mover = current;
-					return true;
-			 
-		  }  
-		}
-		);//end of listener
+		AIActors.add(current);
+		
 	  }
 	 
 	  public void spritePos(float x, float y)
@@ -81,11 +67,11 @@ public class EntityActor extends Actor
 	  
 	  public static void deathcheck()
 	  {
-		  for(int i=0; i<entityActors.size; i++)
+		  for(int i=0; i<AIActors.size; i++)
 		  {
-			  if(entityActors.get(i).entity.commander == "Dead")
+			  if(AIActors.get(i).entity.commander == "Dead")
 			  {
-				  entityActors.get(i).remove();
+				  AIActors.get(i).remove();
 			  }
 		  }
 		  
@@ -106,4 +92,3 @@ public class EntityActor extends Actor
 	
 	
 }
-

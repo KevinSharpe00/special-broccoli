@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.Texture;
+
 
 //todo: class relations and inheritance and shit
 public class Nation 
@@ -8,17 +8,17 @@ public class Nation
 	double money;
 	int TechPoints;
 	boolean[] Tech_tree;//20* unlockable technologies
-	
-	int market_count;
-	//unused
-	int market_modifier;
+	double upkeep;
+	//int church_count;
+	//int church_modifier;
 	int castle_count;
 	double income;
-	double upkeep;
-	double materials;
-	double mat_income;
 	int science;
 	String Owner;
+	int market_count;
+	int market_modifier;
+	double materials;
+	double mat_income;
 	
 	public Nation()
 	{
@@ -35,7 +35,6 @@ public class Nation
 		//default values, subject to change
 		income = 5;
 		science = 20;
-		
 		
 	}
 	
@@ -95,7 +94,7 @@ public class Nation
 		money += i;
 	}
 	
-	//TODO NOT DONE, NEED LOCATION
+	//NOT DONE, NEED LOCATION
 	public boolean Build(String building)
 	{
 		boolean built = false;
@@ -136,14 +135,11 @@ public class Nation
 
 		return built;
 	}
-	public void addUnitUpkeep(double m)
-	{
-		upkeep += m;
-	}
+	
 	public void endturn()
 	{
 		
-		income = 5 + market_count*market_modifier - upkeep;
+		income = 5 + market_count*market_modifier -upkeep;
 		AddMoney(income);
 		AddTechPoints(science);
 	}
@@ -152,12 +148,15 @@ public class Nation
 	{
 		System.out.println("Money: " + money);
 		System.out.println("Science: " + science);
-		System.out.println("Churches: " + market_count);
+		System.out.println("Markets: " + market_count);
 		System.out.println("Castles: " + castle_count);
 	}
 	
 	
-	
+	public void addUnitUpkeep(double m)
+    {
+        upkeep += m;
+    }
 	
 	
 	
