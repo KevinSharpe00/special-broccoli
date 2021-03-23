@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-
+import com.badlogic.gdx.graphics.Texture;
 
 //todo: class relations and inheritance and shit
 public class Nation 
@@ -116,9 +116,9 @@ public class Nation
 		}
 		else if(building == "castle")
 		{
-			if(materials > 250)
+			if(materials > 0)
 			{
-				materials -= 250;
+				materials -= 0;
 				System.out.println("Castle Built");
 				built = true;
 				castle_count++;

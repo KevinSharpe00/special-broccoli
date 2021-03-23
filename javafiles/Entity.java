@@ -16,8 +16,7 @@ public class Entity //does it extend or implement something?
     int range;
     Tile position;
     String commander;
-    boolean istouched;
-    
+    boolean exhausted;
 	Texture tex;
     Sprite sprite;
     
@@ -31,15 +30,41 @@ public class Entity //does it extend or implement something?
         commander = c;
         tex = t;
         sprite = new Sprite(tex);
-        istouched = false;
+        exhausted = false;
+        
     }
     
     boolean Move(Tile T)
     {
-        boolean moved = false;
+    	exhausted = true;
         //unrestricted
         position = T;
-        return moved;
+        return exhausted;
+        
+        
+    }
+    
+    boolean MoveCheck(Tile T)
+    {
+    	int dx = position.ipos - T.ipos;
+    	int dy = position.jpos - T.jpos;
+    	//make both positive;
+    	if(dx < 0)
+    	{
+    		dx *= -1;
+    	}
+    	if(dy < 0)
+    	{
+    		dy *= -1;
+    	}
+    	  	
+    	if(dx+dy > range)
+    	{
+    		System.out.println("Too Far");
+    		return false;
+    	}
+    
+    		return true;
     }
     
     public void printInfo()
@@ -51,7 +76,7 @@ public class Entity //does it extend or implement something?
         position.getCoords();
         System.out.println("Commander: " + commander);
     }
-	//TODO build
+
 	
     public String getCommander()
 	{
@@ -73,7 +98,6 @@ public class Entity //does it extend or implement something?
 		health -= dmg;
 	}
 
-	//new stuff ///////////////////////////////////////////////////////////////////////////
 	void makesprite(SpriteBatch sprite_batch)
 	{
 		sprite_batch.begin();
@@ -85,17 +109,17 @@ public class Entity //does it extend or implement something?
 		sprite.setPosition(x, y);
 	}
 	
-	void Touch()
+	void Tired()
 	{
-		istouched = true;
+		exhausted = true;
 	}
-	void UnTouch()
+	void notTired()
 	{
-		istouched = false;
+		exhausted = false;
 	}
-
-
-
+	
+	
+	
 }
 
 

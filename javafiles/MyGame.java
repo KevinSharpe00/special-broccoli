@@ -1,36 +1,37 @@
 package com.mygdx.game;
 
+import java.util.Vector;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import java.util.*;
 
 public class MyGame {
 
 	Map map;
 	Nation[] N = new Nation[4];
 	public int turn;
-	SpriteBatch sprite_batch;
+	SpriteBatch sb;
 	public Vector<Entity> entities = new Vector<Entity>();
 	int entity_counter = 0;
 	
 	public MyGame()
 	{
-		sprite_batch = new SpriteBatch();
+		//sprite_batch = new SpriteBatch();
 		map = new Map(40, 30);
-		//
+		//TODO: make 4 player
 		Nation P1 = new Nation();
 		Nation P2 = new Nation();
-		Nation P3 = new Nation();
-		Nation P4 = new Nation();
-		N = new Nation[4];
+		//Nation P3 = new Nation();
+		//Nation P4 = new Nation();
+		N = new Nation[2];
 		N[0] = P1;
 		N[1] = P2;
-		N[2] = P3;
-		N[3] = P4;
+		//N[2] = P3;
+		//N[3] = P4;
 		
 		turn = 0;
-		//
+		
 		
 		
 		
@@ -38,7 +39,7 @@ public class MyGame {
 	
 	public MyGame(int i, int j)
 	{
-		sprite_batch = new SpriteBatch();
+		//sprite_batch = new SpriteBatch();
 		map = new Map(i, j);
 		N = new Nation[4];
 		turn = 0;
@@ -70,8 +71,8 @@ public class MyGame {
 		}
 	}
 	
-
-	//entity stuff
+	/////////////new Entity Stuff
+	
 	public void EntityPrint(int l)
 	{
 		entities.get(l).printInfo();
@@ -80,6 +81,14 @@ public class MyGame {
 	public void AddEntity(double h, double d, int r, Tile p, String c, Texture t)
 	{
 		Entity E = new Entity(h, d, r, p, c, t);
+		entities.add(E);
+		entity_counter++;
+	}
+	
+	public void AddSwordsman(Tile p, String c)
+	{
+		Texture tex = new Texture(Gdx.files.internal("redswordman.png"));
+		Entity E = new Entity(20, 5, 3, p, c, tex);
 		entities.add(E);
 		entity_counter++;
 	}
@@ -141,7 +150,17 @@ public class MyGame {
 				
 				if(B.health <= 0)
 				{//death check
+					//update for when more than one player
+					if(B.commander == "Player 1")
+					{
+						N[0].addUnitUpkeep(-1);
+					}
+					else
+					{
+						N[1].addUnitUpkeep(-1);
+					}
 					B.commander = "Dead";
+					B.damage = 0;
 				}
 				return;
 			}
@@ -176,7 +195,10 @@ public class MyGame {
 		{
 			if(entities.get(i).commander == "Dead" || entities.get(i).damage == 0)
 			{
+				
 				entities.remove(i);
+				i--;
+                entity_counter--;
 			}
 		}
 	}
@@ -191,7 +213,7 @@ public class MyGame {
 	
 	
 	
-	///////////// Nation stuff
+	/////////////new Nation stuff
 	
 	public void AddMoney(int m)
 	{
@@ -231,24 +253,31 @@ public class MyGame {
 	{
 		N[turn].endturn();
 		turn++;
-		if(turn == 4)
+		if(turn == 2)//change to 4 if more players are added
 		{
 			turn = 0;
 		}
-	}
-
-	public void setSprite(int i, float x, float y)
-	{
-		entities.get(i).setspritepos(x, y);
-	}
-	
-	
-	public void drawSprite(int i)
+		//untire each entity
+		for(int i = 0; i < entities.size(); i++)
 		{
-			entities.get(i).makesprite(sprite_batch);
+			entities.get(i).notTired();
 		}
+		//check for battles
+		endTurnBattles();
+		ShiftEntities();
+	}
 	
-	
-
+	//move sprite
+	/*
+		public void setSprite(int i, float x, float y)
+		{
+			entities.get(i).setspritepos(x, y);
+		}
+		
+		//draw sprite
+		public void drawSprite(int i)
+			{
+				entities.get(i).makesprite(sprite_batch);
+			}*/
 		
 }
