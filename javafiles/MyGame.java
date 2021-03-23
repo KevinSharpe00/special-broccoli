@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import java.util.Vector;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,6 +12,7 @@ public class MyGame {
 	Map map;
 	Nation[] N = new Nation[2];
 	public int turn;
+	public int turncount;
 	SpriteBatch sb;
 	public Vector<Entity> entities = new Vector<Entity>();
 	int entity_counter = 0;
@@ -30,7 +32,7 @@ public class MyGame {
 		N[1] = P2;
 		
 		turn = 0;
-		
+		turncount = 0;
 	}
 	
 	public MyGame(int i, int j)
@@ -190,7 +192,7 @@ public class MyGame {
 	{
 		for(int i = 0; i < entity_counter; i++)
 		{
-			if(entities.get(i).commander == "Dead" || entities.get(i).damage == 0)
+			if(entities.get(i).commander == "Dead" || entities.get(i).health <= 0)
 			{
 				EntityActor.deathcheck();
 				AIActor.deathcheck();
@@ -251,6 +253,7 @@ public class MyGame {
 	{
 		N[turn].endturn();
 		turn++;
+		turncount++;
 		if(turn == 2)
 		{
 			turn = 0;
@@ -261,10 +264,25 @@ public class MyGame {
 			entities.get(i).notTired();
 		}
 		//check for battles
+		turnlose();
 		endTurnBattles();
 		ShiftEntities();
 		this.ai = MapScreen.ai;
+		if(ai.AILost())
+		{
+	    	((Game)Gdx.app.getApplicationListener()).setScreen(new WinScreen());
+		}
 		ai.AISimpleCheck();
+		
+		
+	}
+	
+	public void turnlose()
+	{
+		if(turncount >= 200)
+		{
+			((Game)Gdx.app.getApplicationListener()).setScreen(new LoseScreen());
+		}
 	}
 	
 	//move sprite

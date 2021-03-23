@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import java.util.Vector;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import java.lang.Math;
@@ -28,13 +29,15 @@ public class AI
 	 */
 	MyGame mygame;
 	public Vector<Entity> aientities = new Vector<Entity>();
-	public AI(MyGame mg)
+	public AI(enlightenment game, MyGame mg)
 	{
 		this.mygame = mg;
 		Texture evilcastle = new Texture(Gdx.files.internal("evilcastle.png"));
 	       mygame.AddEntity(40, 0, 0, mygame.map.tiles[24][20], "Player 2", evilcastle);
 	       AIActor evilbase = new AIActor(mygame.entities.get(1), "base2");
 	       MapScreen.mapstage.addActor(evilbase);
+	       evilbase.setName("aibase");
+	       //aibase starts here, maybe change later?
 	       evilbase.unrestrictedMove(384,320);
 	       
 	}
@@ -76,7 +79,7 @@ public class AI
 	
 	public void AIMove()
 	{
-		for(int i = 0; i < AIActor.AIActors.size; i++)
+		for(int i = 0; i < AIActor.AIActors.size(); i++)
 		{
 			if(AIActor.AIActors.get(i).entity.exhausted == false) 
 			{
@@ -104,6 +107,19 @@ public class AI
 				}
 			}
 		}
+	}
+	
+	public boolean AILost()
+	{
+		for(int i = 0; i < AIActor.AIActors.size(); i++)
+		{
+			if(AIActor.AIActors.get(i).getName().equals("aibase"))
+			{
+				return false;
+			}
+	
+		}
+		return true;
 	}
 	
 	

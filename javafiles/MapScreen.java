@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -88,7 +89,7 @@ public class MapScreen implements Screen
 	   tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		
        texture = new Texture(Gdx.files.internal("orangeswordsman.png"));
-       mygame.AddEntity(40, 20, 10, mygame.map.tiles[10][10], "Player 1", texture);
+       mygame.AddEntity(40, 20, 99, mygame.map.tiles[10][10], "Player 3", texture);
        entityactor = new EntityActor(mygame.entities.get(0), "sword 1");
        //change type later
 	   //TODO: add ai castle
@@ -149,7 +150,12 @@ public class MapScreen implements Screen
        entityactor.unrestrictedMove(160, 160);
        mapstage.addActor(castle);
        castle.spritePos(128, 32);
-       ai = new AI(mygame);
+       ai = new AI(game,mygame);
+       
+       
+       Music music = Gdx.audio.newMusic(Gdx.files.internal("loopedmusic.mp3"));
+       music.setLooping(true);
+	   music.play();
    }
    
 @Override

@@ -160,7 +160,3 @@ public class SettlerActor extends EntityActor
           movebutton.remove();
 	  }
 }
-
-
-
-

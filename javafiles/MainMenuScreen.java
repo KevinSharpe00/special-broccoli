@@ -34,6 +34,8 @@ public class MainMenuScreen implements Screen
 	protected BitmapFont blocky;
 	protected Table mainTable;
 	enlightenment game;
+	private Texture texture;
+    private TextureRegion region;
 	
     public MainMenuScreen(enlightenment game)
     {
@@ -49,13 +51,16 @@ public class MainMenuScreen implements Screen
         //think we need a worldwidth and height thing, do that here i guess. (in px?)
         //TODO: make a constants class with all of this info in it. temp values put in
         //what was here before was something like Constants.WorldWidth, Constants.WorldHeight
-        viewport = new FitViewport(400, 200, camera);
+        viewport = new FitViewport(512, 384, camera);
         viewport.apply();
 
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
 
-        stage = new Stage(viewport, batch);    
+        stage = new Stage(viewport, batch);   
+        
+        //Texture.setEnforcePotImages(false);
+        texture = new Texture(Gdx.files.internal("mapimageblurred.png"));
                 
     }
 
@@ -71,7 +76,7 @@ public class MainMenuScreen implements Screen
         //Set table to fill stage
         mainTable.setFillParent(true);
         //Set alignment of contents in the table.
-        mainTable.top();
+        mainTable.center();
         
         //create greenbutton.png as a drawable
         
@@ -87,8 +92,6 @@ public class MainMenuScreen implements Screen
         TextButton playButton = new TextButton("Play", textButtonStyle);
         TextButton optionsButton = new TextButton("Options", textButtonStyle);
         TextButton exitButton = new TextButton("Exit", textButtonStyle);
-
-        
         
         
         //Add listeners to buttons
@@ -109,9 +112,10 @@ public class MainMenuScreen implements Screen
         });
 
         //Add buttons to table
-        mainTable.add(playButton);
+        
+        mainTable.add(playButton).pad(20);
         mainTable.row();
-        mainTable.add(optionsButton);
+        //mainTable.add(optionsButton).pad(20); //TODO: make options do something
         mainTable.row();
         mainTable.add(exitButton);
 
@@ -125,9 +129,19 @@ public class MainMenuScreen implements Screen
 		//TODO: look up what this shit does, i just copied it from stack overflow lol
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        
+        batch.begin();
+        batch.draw(texture,0,0);
+        blocky.draw(batch,"ENLIGHTENMENT",154,300);
+        batch.end();
+        
         stage.act();
         stage.draw();
+        
+      //batch.setProjectionMatrix(camera.combined);
+        //batch.begin();
+        //font.draw(batch,"Money: "+ String.valueOf(mygame.N[0].money),20,20);
+        //batch.end();
 		
 	}
 
@@ -167,6 +181,7 @@ public class MainMenuScreen implements Screen
 		skin.dispose();
         atlas.dispose();
         stage.dispose();
+        texture.dispose();
 	}
 	
 	

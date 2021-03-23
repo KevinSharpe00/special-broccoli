@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import java.util.Vector;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -17,7 +19,7 @@ public class AIActor extends Actor
 {
 	Action action;
 	Entity entity;
-	static Array<AIActor> AIActors = new Array<AIActor>();
+	static Vector<AIActor> AIActors = new Vector<AIActor>();
 	AIActor current;
 	 
 	//maybe inherit and change a bit to do different things on touch???
@@ -67,11 +69,12 @@ public class AIActor extends Actor
 	  
 	  public static void deathcheck()
 	  {
-		  for(int i=0; i<AIActors.size; i++)
+		  for(int i=0; i<AIActors.size(); i++)
 		  {
 			  if(AIActors.get(i).entity.commander == "Dead")
 			  {
 				  AIActors.get(i).remove();
+				  AIActors.remove(i);
 			  }
 		  }
 		  
