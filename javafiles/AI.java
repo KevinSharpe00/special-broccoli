@@ -111,13 +111,22 @@ public class AI
 	
 	public boolean AILost()
 	{
+		//hotfix for a bug we found last minute
+		try
+		{
 		for(int i = 0; i < AIActor.AIActors.size(); i++)
 		{
+			
 			if(AIActor.AIActors.get(i).getName().equals("aibase"))
 			{
 				return false;
 			}
-	
+			
+		}
+		}
+		catch(Exception e)
+		{
+		return true;
 		}
 		return true;
 	}
