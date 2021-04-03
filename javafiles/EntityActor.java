@@ -66,12 +66,17 @@ public class EntityActor extends Actor
 		  {
 			  System.out.println("no");
 		  }
+		  MapScreen.mygame.ClearSwords();
+		  MapScreen.mygame.SwordCheck(x, y);
 	  }
 	  
 	  public void unrestrictedMove(float x, float y)
 	  {
 		  entity.sprite.setPosition(x, y);
 		  setBounds(entity.sprite.getX(), entity.sprite.getY(), entity.sprite.getWidth(), entity.sprite.getHeight());
+	  
+		  MapScreen.mygame.ClearSwords();
+		  MapScreen.mygame.SwordCheck(x, y);
 	  }
 	  
 	  public void spriteSet(float x, float y)

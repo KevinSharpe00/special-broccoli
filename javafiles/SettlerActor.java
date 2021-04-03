@@ -86,7 +86,8 @@ public class SettlerActor extends EntityActor
 	  	                		MapScreen.batch.end();
 	  	                		*/
 	  	                	Texture castlegraphic = new Texture(Gdx.files.internal("castle.png"));
-	  	                	CastleBase castle2 = new CastleBase(castlegraphic,"base1");
+	  	                	MapScreen.mygame.AddEntity(40,  0,  0, MapScreen.mygame.map.tiles[8][2], "playerbase", castlegraphic);
+	  	                	CastleBase castle2 = new CastleBase(MapScreen.mygame.entities.get(MapScreen.mygame.entities.size() -1),"base1");
 	  	                	MapScreen.mapstage.addActor(castle2);
 	  	                	castle2.spritePos(entity.sprite.getX(), entity.sprite.getY());
 	  	                	
@@ -156,7 +157,13 @@ public class SettlerActor extends EntityActor
 			  System.out.println("no");
 		  }
 		  
-		  bbutton.remove();
-          movebutton.remove();
+		  //clear the buttons
+		  if(bbutton != null)
+		  {
+			  bbutton.remove();
+	          movebutton.remove(); 
+		  }
+		  MapScreen.mygame.ClearSwords();
+		  MapScreen.mygame.SwordCheck(x, y);
 	  }
 }

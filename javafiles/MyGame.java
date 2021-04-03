@@ -187,6 +187,46 @@ public class MyGame {
 	}
 	
 	
+	public void SwordCheck(float x, float y)
+	{//summons swords
+		for(int i = 0; i < entity_counter; i++)
+		{
+			for(int j = 0; j < entity_counter; j++)
+			{
+				if(i != j && entities.get(i).position == entities.get(j).position)
+				{
+					if(entities.get(i).getCommander() != entities.get(j).getCommander())
+					{
+						Texture t = new Texture("pukichow.png");
+						SwordActor sw = new SwordActor(t, "Swords");
+						MapScreen.mapstage.addActor(sw);
+						sw.spritePos(x, y);
+					}
+					
+				}
+				else
+				{
+					//no sword needed
+				}
+				
+			}
+		}
+	}
+	public void ClearSwords()
+	{
+		for(int i = 0; i <  SwordActor.swords.size; i++)
+		{
+			
+				SwordActor.swords.get(i).remove();
+				SwordActor.swords.removeIndex(i);
+				//System.out.println(toString(SwordActor.swords.get(i)));
+			
+		}
+		
+		
+	}
+	
+	
 	
 	public void ShiftEntities()
 	{
@@ -194,6 +234,7 @@ public class MyGame {
 		{
 			if(entities.get(i).commander == "Dead" || entities.get(i).health <= 0)
 			{
+				CastleBase.deathcheck();
 				EntityActor.deathcheck();
 				AIActor.deathcheck();
 				entities.remove(i);
@@ -279,10 +320,23 @@ public class MyGame {
 	
 	public void turnlose()
 	{
+		boolean castle = false;
+		boolean turn = false;
+		if(CastleBase.castlebases.size == 0)
+		{
+			castle = true;
+		}		
 		if(turncount >= 200)
+		{
+			turn = true;
+		}
+		
+		
+		if(turn | castle) 
 		{
 			((Game)Gdx.app.getApplicationListener()).setScreen(new LoseScreen());
 		}
+		
 	}
 	
 	//move sprite

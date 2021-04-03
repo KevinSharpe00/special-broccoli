@@ -48,7 +48,7 @@ public class MapScreen implements Screen
    public static OrthographicCamera camera;
    TiledMapRenderer tiledMapRenderer;
     SpriteBatch sb;
-    SpriteBatch batch;
+    static SpriteBatch batch;
     Texture texture;
     Sprite sprite;
    enlightenment game;
@@ -65,6 +65,7 @@ public class MapScreen implements Screen
    static MyGame mygame;
    Label label;
    static AI ai;
+   static Sprite sp;
   // private Texture box;
    
    public MapScreen(enlightenment game, MyGame mg)
@@ -89,12 +90,18 @@ public class MapScreen implements Screen
 	   tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		
        texture = new Texture(Gdx.files.internal("orangeswordsman.png"));
-       mygame.AddEntity(40, 20, 99, mygame.map.tiles[10][10], "Player 3", texture);
+       mygame.AddEntity(40, 200, 99, mygame.map.tiles[10][10], "Player 3", texture);
        entityactor = new EntityActor(mygame.entities.get(0), "sword 1");
        //change type later
 	   //TODO: add ai castle
        Texture castlegraphic = new Texture(Gdx.files.internal("castle.png"));
-       CastleBase castle = new CastleBase(castlegraphic,"base1");
+       mygame.AddEntity(40,  0,  0,  mygame.map.tiles[8][2], "playerbase", castlegraphic);
+       CastleBase castle = new CastleBase(mygame.entities.get(1),"base1");
+       
+       //Texture tex = new Texture(Gdx.files.internal("settler.png"));
+       //mygame.AddEntity(10,1,3,mygame.map.tiles[10][5],"Player 1",tex);
+       //SettlerActor sa = new SettlerActor(mygame.entities.get(2), "settler" + String.valueOf(mygame.entity_counter-1));
+       
        
        
        blocky = new BitmapFont(Gdx.files.internal("blocky.fnt"));
@@ -149,6 +156,8 @@ public class MapScreen implements Screen
        mapstage.addActor(entityactor);
        entityactor.unrestrictedMove(160, 160);
        mapstage.addActor(castle);
+       //mapstage.addActor(sa);
+       //sa.spritePos(160, 80);
        castle.spritePos(128, 32);
        ai = new AI(game,mygame);
        

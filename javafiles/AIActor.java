@@ -54,6 +54,8 @@ public class AIActor extends Actor
 		  {
 			  System.out.println("no");
 		  }
+		  MapScreen.mygame.ClearSwords();
+		  MapScreen.mygame.SwordCheck(x, y);
 	  }
 	  
 	  public void unrestrictedMove(float x, float y)

@@ -17,6 +17,8 @@ public class Nation
 	String Owner;
 	int market_count;
 	int market_modifier;
+	int mine_count;
+	int mine_modifier;
 	double materials;
 	double mat_income;
 	
@@ -28,12 +30,12 @@ public class Nation
 		income = 0;
 		materials = 20;
 		
-		mat_income = 2;
+		mat_income = 0;
 		market_count = 0;
+		mine_count = 0;
 		market_modifier = 2;
+		mine_modifier = 2;
 		castle_count = 0;
-		//default values, subject to change
-		income = 5;
 		science = 20;
 		
 	}
@@ -93,6 +95,10 @@ public class Nation
 	{
 		money += i;
 	}
+	public void AddMaterials(double m) 
+	{
+		materials += m;
+	}
 	
 	//NOT DONE, NEED LOCATION
 	public boolean Build(String building)
@@ -111,6 +117,16 @@ public class Nation
 			else
 			{
 				System.out.println("Not enough Money");
+			}
+		}
+		else if(building == "mine")
+		{
+			if(money >= 20)
+			{
+				money -= 20;
+				System.out.println("mine built");
+				built = true;
+				mine_count++;
 			}
 		}
 		else if(building == "castle")
@@ -140,6 +156,8 @@ public class Nation
 	{
 		
 		income = 5 + market_count*market_modifier -upkeep;
+		mat_income = 2 + mine_count*mine_modifier;
+		AddMaterials(mat_income);
 		AddMoney(income);
 		AddTechPoints(science);
 	}
