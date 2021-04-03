@@ -18,22 +18,21 @@ public class MyActor extends Actor
 	  public MyActor(Texture texture, final String actorName) 
 	  {
 		  current = this;
-		  sprite = new Sprite(texture);
+		sprite = new Sprite(texture);
 	 
-		  spritePos(sprite.getX(), sprite.getY());
-		  //setTouchable(Touchable.disabled);
+		spritePos(sprite.getX(), sprite.getY());
+		/*setTouchable(Touchable.enabled);
 		
-		  /*
-			addListener(new InputListener() {
-		  	@Override
-		  	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+		
+		addListener(new InputListener() {
+		  @Override
+		  public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 			Gdx.app.log("Touch down asset with name ", actorName);
 			//MapInputHandler.mover = current;
 			//MapScreen.movestate();
 			return true;
-		  	}
-			});
-		   */
+		  }
+		});*/
 			
 	  }
 	 

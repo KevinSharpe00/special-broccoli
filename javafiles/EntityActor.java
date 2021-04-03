@@ -42,6 +42,21 @@ public class EntityActor extends Actor
 					return true;
 			 
 		  }  
+		  
+		  @Override
+		  public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor)
+			{
+				//Gdx.app.log("HP:", String.valueOf(entity.health));
+				MapScreen.unitinfolabel.setText("\n    HP: " + String.valueOf(entity.health) + "\n    DMG: " + String.valueOf(entity.damage) + "\n    MOV: " + String.valueOf(entity.range));
+				
+			}
+		  
+		  
+		  @Override
+			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
+			{
+			  MapScreen.unitinfolabel.setText(" ");
+			}
 		}
 		);//end of listener
 	  }
@@ -68,13 +83,14 @@ public class EntityActor extends Actor
 		  }
 		  MapScreen.mygame.ClearSwords();
 		  MapScreen.mygame.SwordCheck(x, y);
+		  
 	  }
 	  
 	  public void unrestrictedMove(float x, float y)
 	  {
 		  entity.sprite.setPosition(x, y);
 		  setBounds(entity.sprite.getX(), entity.sprite.getY(), entity.sprite.getWidth(), entity.sprite.getHeight());
-	  
+		  
 		  MapScreen.mygame.ClearSwords();
 		  MapScreen.mygame.SwordCheck(x, y);
 	  }
@@ -111,4 +127,3 @@ public class EntityActor extends Actor
 	
 	
 }
-

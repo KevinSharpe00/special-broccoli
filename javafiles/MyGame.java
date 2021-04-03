@@ -168,7 +168,7 @@ public class MyGame {
 	}
 	
 	public void endTurnBattles()
-	{//makes units batle twice
+	{//makes units battle twice
 		for(int i = 0; i < entity_counter; i++)
 		{
 			for(int j = 0; j < entity_counter; j++)
@@ -177,11 +177,27 @@ public class MyGame {
 				{
 					Battle(entities.get(i), entities.get(j));
 				}
-				else
-				{
-					//no battle needed;
-				}
 				
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	public void ShiftEntities()
+	{
+		for(int i = 0; i < entity_counter; i++)
+		{
+			if(entities.get(i).commander == "Dead" || entities.get(i).health <= 0)
+			{
+				EntityActor.deathcheck();
+				AIActor.deathcheck();
+				entities.remove(i);
+				i--;
+                entity_counter--;
 			}
 		}
 	}
@@ -197,18 +213,13 @@ public class MyGame {
 				{
 					if(entities.get(i).getCommander() != entities.get(j).getCommander())
 					{
-						Texture t = new Texture("pukichow.png");
+						Texture t = new Texture("bettercrossedswords.png");
 						SwordActor sw = new SwordActor(t, "Swords");
 						MapScreen.mapstage.addActor(sw);
 						sw.spritePos(x, y);
 					}
 					
-				}
-				else
-				{
-					//no sword needed
-				}
-				
+				}				
 			}
 		}
 	}
@@ -219,33 +230,12 @@ public class MyGame {
 			
 				SwordActor.swords.get(i).remove();
 				SwordActor.swords.removeIndex(i);
-				//System.out.println(toString(SwordActor.swords.get(i)));
+				
 			
 		}
 		
 		
 	}
-	
-	
-	
-	public void ShiftEntities()
-	{
-		for(int i = 0; i < entity_counter; i++)
-		{
-			if(entities.get(i).commander == "Dead" || entities.get(i).health <= 0)
-			{
-				CastleBase.deathcheck();
-				EntityActor.deathcheck();
-				AIActor.deathcheck();
-				entities.remove(i);
-				i--;
-                entity_counter--;
-			}
-		}
-	}
-	
-	
-	
 	
 	
 	
@@ -318,6 +308,7 @@ public class MyGame {
 		
 	}
 	
+	
 	public void turnlose()
 	{
 		boolean castle = false;
@@ -338,18 +329,5 @@ public class MyGame {
 		}
 		
 	}
-	
-	//move sprite
-	/*
-		public void setSprite(int i, float x, float y)
-		{
-			entities.get(i).setspritepos(x, y);
-		}
-		
-		//draw sprite
-		public void drawSprite(int i)
-			{
-				entities.get(i).makesprite(sprite_batch);
-			}*/
 		
 }

@@ -95,12 +95,12 @@ public class Nation
 	{
 		money += i;
 	}
+	
 	public void AddMaterials(double m) 
 	{
 		materials += m;
 	}
 	
-	//NOT DONE, NEED LOCATION
 	public boolean Build(String building)
 	{
 		boolean built = false;

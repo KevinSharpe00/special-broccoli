@@ -76,15 +76,7 @@ public class SettlerActor extends EntityActor
 	  	                if(MapScreen.mygame.N[MapScreen.mygame.turn].materials >= 0)
 	  	                {
 	  	                	MapScreen.mygame.N[MapScreen.mygame.turn].Build("castle");
-	  	                		//visual market
-	  	                		/*
-	  	                		Texture t = new Texture("market.png");
-	  	                		Sprite m = new Sprite(t);
-	  	                		MapScreen.batch.begin();
-	  	                		m.draw(MapScreen.batch);
-	  	                		m.setPosition(152, 32);
-	  	                		MapScreen.batch.end();
-	  	                		*/
+	  	                		
 	  	                	Texture castlegraphic = new Texture(Gdx.files.internal("castle.png"));
 	  	                	MapScreen.mygame.AddEntity(40,  0,  0, MapScreen.mygame.map.tiles[8][2], "playerbase", castlegraphic);
 	  	                	CastleBase castle2 = new CastleBase(MapScreen.mygame.entities.get(MapScreen.mygame.entities.size() -1),"base1");
@@ -157,13 +149,12 @@ public class SettlerActor extends EntityActor
 			  System.out.println("no");
 		  }
 		  
-		  //clear the buttons
-		  if(bbutton != null)
-		  {
-			  bbutton.remove();
-	          movebutton.remove(); 
-		  }
-		  MapScreen.mygame.ClearSwords();
-		  MapScreen.mygame.SwordCheck(x, y);
+		  bbutton.remove();
+          movebutton.remove();
+          
+          MapScreen.mygame.ClearSwords();
+    	  MapScreen.mygame.SwordCheck(x, y);
 	  }
+	  
+	  
 }

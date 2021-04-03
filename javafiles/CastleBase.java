@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -46,6 +47,23 @@ public class CastleBase extends MyActor
 		
 		//TODO top level castle clicking
 		addListener(new InputListener() {
+			
+			
+			 @Override
+			  public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor)
+				{
+					//Gdx.app.log("HP:", String.valueOf(entity.health));
+					MapScreen.unitinfolabel.setText("\n    HP: " + String.valueOf(ent.health) + "\n    DMG: " + String.valueOf(ent.damage) + "\n    MOV: " + String.valueOf(ent.range));
+					
+				}
+			  
+			  
+			  @Override
+				public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
+				{
+				  MapScreen.unitinfolabel.setText(" ");
+				}
+			
 		  @Override
 		  public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) 
 		  {
@@ -60,6 +78,7 @@ public class CastleBase extends MyActor
 			  //player castle is always at set position, so this is done.
 			    pbutton.setPosition(X+16,Y+48);
 	            pbutton.addListener(new ClickListener(){
+	            	
 	                @Override
 	                public void clicked(InputEvent event, float x, float y) 
 	                {
