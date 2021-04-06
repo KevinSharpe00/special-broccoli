@@ -50,6 +50,7 @@ public class TechButtons {
 	{
 		this.stage = s;
 		t = MapScreen.mygame.turn;
+		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
 	}
 	
 	
@@ -128,12 +129,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[0]);
+    		MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[0]);
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+    		"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[0]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[0]));     
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -149,12 +153,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[1]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[1]);
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+    		"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[1]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[1]));  
     	} 
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -170,12 +177,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[2]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[2]);
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+    		"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[2]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[2]));  
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -191,12 +201,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[3]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[3]);
+			MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+			"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[3]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[3])); 
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -212,12 +225,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[4]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[4]);
+			MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+			"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[4]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[4])); 
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -233,12 +249,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[5]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[5]);
+			MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+			"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[5]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[5])); 
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -254,12 +273,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[6]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[6]);
+			MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+			"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[6]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[6])); 
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -275,12 +297,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[7]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[7]);
+			MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+			"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[7]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[7])); 
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -296,12 +321,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[8]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[8]);
+			MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+			"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[8]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[8])); 
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -317,12 +345,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[9]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[9]);
+			MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+			"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[9]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[9])); 
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -338,12 +369,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[10]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[10]);
+			MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+			"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[10]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[10])); 
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -359,12 +393,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[11]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[11]);
+			MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+			"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[11]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[11])); 
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -380,12 +417,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[12]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[12]);
+			MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+			"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[12]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[12])); 
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -401,12 +441,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[13]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[13]);
+			MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+			"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[13]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[13])); 
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		    		
 	});
@@ -422,12 +465,15 @@ public class TechButtons {
 	    		    		    		
 		public void enter(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-			MapScreen.label3.setText("      " + MapScreen.mygame.N[0].Tech_boosts[14]);
+			MapScreen.StatLabel.setText("      " + MapScreen.mygame.N[0].Tech_boosts[14]);
+			MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints) + 
+			"\n     Researched: " + String.valueOf(MapScreen.mygame.N[0].Tech_tree[14]) + "\n     Tech Cost: " + String.valueOf(MapScreen.mygame.N[0].Tech_cost[14])); 
     	}
 		
     	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
     	{
-    		MapScreen.label3.setText(" ");
+    		MapScreen.StatLabel.setText(" ");
+    		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
     	}
 		
     	
@@ -455,8 +501,10 @@ public class TechButtons {
 			Tech13button.remove();
 			Tech14button.remove();
 			TechEbutton.remove();
-			MapScreen.label2.remove();
-			MapScreen.label3.remove();
+			MapScreen.TechBackgroundLabel.remove();
+			MapScreen.StatLabel.remove();
+			MapScreen.TechInfoLabel.remove();
+			//MapScreen.AnnounceLabel.remove();
 			
        	}
 	    		    		    		
