@@ -5,32 +5,23 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 
 public class CastleBase extends MyActor 
 {
-	
-	static Array<CastleBase> castlebases = new Array<CastleBase>();
 	float X;
-	CastleBase current;
 	float Y;
-	Entity ent;
-	public CastleBase(Entity e, final String actorName) 
+	public CastleBase(Texture texture, final String actorName) 
 	{
-		super(e.sprite.getTexture(), actorName);
+		super(texture, actorName);
 		TextureAtlas atlas = new TextureAtlas("menusprites.txt");
 		Skin skin = new Skin(atlas);
-		current = this;
-		ent = e;
-		castlebases.add(current);
 		
 		//ImageButtonStyle personbutton = new ImageButtonStyle();
 		//personbutton.up = skin.getDrawable("PersonButton");
@@ -43,32 +34,14 @@ public class CastleBase extends MyActor
 		final ImageButtonStyle hammerbutton = UImanager.configbutton(skin, "hammerbutton");
 		final ImageButtonStyle marketbutton = UImanager.configbutton(skin, "browncoin");
 		final ImageButtonStyle castlebutton = UImanager.configbutton(skin, "browncastle");
-		
+		//MapScreen.mygame.N[MapScreen.mygame.turn].TileBonus(MapScreen.mygame.map.tiles[(int) (X/16)][(int) (Y/16)]);
 		
 		//TODO top level castle clicking
 		addListener(new InputListener() {
-			
-			
-			 @Override
-			  public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor)
-				{
-					//Gdx.app.log("HP:", String.valueOf(entity.health));
-					MapScreen.unitinfolabel.setText("\n    HP: " + String.valueOf(ent.health) + "\n    DMG: " + String.valueOf(ent.damage) + "\n    MOV: " + String.valueOf(ent.range));
-					
-				}
-			  
-			  
-			  @Override
-				public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
-				{
-				  MapScreen.unitinfolabel.setText(" ");
-				}
-			
 		  @Override
 		  public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) 
 		  {
-			  ////////////////////////////////////////////////////////////////////////////////////////////////
-			  //touch castle
+			  
 			  final ImageButton pbutton = new ImageButton(personbutton);
 			  final ImageButton hbutton = new ImageButton(hammerbutton);
 			 
@@ -78,7 +51,6 @@ public class CastleBase extends MyActor
 			  //player castle is always at set position, so this is done.
 			    pbutton.setPosition(X+16,Y+48);
 	            pbutton.addListener(new ClickListener(){
-	            	
 	                @Override
 	                public void clicked(InputEvent event, float x, float y) 
 	                {
@@ -102,7 +74,7 @@ public class CastleBase extends MyActor
                                 {
                                 Texture tex = new Texture(Gdx.files.internal("redswordman.png"));
                                 //MapScreen.mygame.AddSwordsman(MapScreen.mygame.map.tiles[1][1],"Player 1");
-                                MapScreen.mygame.AddEntity(20,5,3,MapScreen.mygame.map.tiles[(int) (X/16-1)][(int) (Y/16)],"Player 1",tex);
+                                MapScreen.mygame.AddEntity(MapScreen.mygame.N[0].unitHP,MapScreen.mygame.N[0].swordDMG,MapScreen.mygame.N[0].unitmove,MapScreen.mygame.map.tiles[(int) (X/16-1)][(int) (Y/16)],"Player 1",tex);
                                 //Gdx.app.log("entitycounter is:", String.valueOf(MapScreen.mygame.entity_counter));       [MapScreen.mygame.entity_counter-1]
                                 EntityActor ea = new EntityActor(MapScreen.mygame.entities.get(MapScreen.mygame.entity_counter-1), "redswordguy" + String.valueOf(MapScreen.mygame.entity_counter-1));//MapScreen.mygame.entity_counter
                                 MapScreen.mapstage.addActor(ea);
@@ -134,7 +106,9 @@ public class CastleBase extends MyActor
 	    	                	if(MapScreen.mygame.N[MapScreen.mygame.turn].money >= 10)
                                 {
                                 Texture tex = new Texture(Gdx.files.internal("settler.png"));
-                                MapScreen.mygame.AddEntity(10,1,3,MapScreen.mygame.map.tiles[(int) (X/16-1)][(int) (Y/16)],"Player 1",tex);
+                                //MapScreen.mygame.AddSwordsman(MapScreen.mygame.map.tiles[1][1],"Player 1");
+                                MapScreen.mygame.AddEntity(MapScreen.mygame.N[0].unitHP,1,MapScreen.mygame.N[0].unitmove,MapScreen.mygame.map.tiles[(int) (X/16-1)][(int) (Y/16)],"Player 1",tex);
+                                //Gdx.app.log("entitycounter is:", String.valueOf(MapScreen.mygame.entity_counter));       [MapScreen.mygame.entity_counter-1]
                                 SettlerActor sa = new SettlerActor(MapScreen.mygame.entities.get(MapScreen.mygame.entity_counter-1), "redswordguy" + String.valueOf(MapScreen.mygame.entity_counter-1));//MapScreen.mygame.entity_counter
                                 MapScreen.mapstage.addActor(sa);
                                 sa.unrestrictedMove(X-16,Y);
@@ -170,8 +144,8 @@ public class CastleBase extends MyActor
 	                	
 	                	final ImageButton mbutton = new ImageButton(marketbutton);
 	                	
-	                	
-	                	final ImageButton bbutton = new ImageButton(hammerbutton);
+	                	/*
+	                	final ImageButton bbutton = new ImageButton(castlebutton);
 	      			  	
 	                	
 	                	
@@ -184,27 +158,26 @@ public class CastleBase extends MyActor
 	    	                {
 	    	                	bbutton.remove();
 	    	                	mbutton.remove();
-	    	                	if(MapScreen.mygame.N[MapScreen.mygame.turn].money >= 20)
+	    	                	if(MapScreen.mygame.N[MapScreen.mygame.turn].materials >= 0)
 	    	                	{
-	    	                		MapScreen.mygame.N[MapScreen.mygame.turn].Build("mine");
-	    	                		Texture t = new Texture("mine.png");
-									MyActor ma = new MyActor(t, "mine");
-									MapScreen.mapstage.addActor(ma);
-									ma.spritePos(X, Y+16);
-	    	                	   
+	    	                		MapScreen.mygame.N[MapScreen.mygame.turn].Build("castle");
+	    	                		
+	    	                		Texture castlegraphic = new Texture(Gdx.files.internal("castle.png"));
+	    	                	    CastleBase castle2 = new CastleBase(castlegraphic,"base1");
+	    	                	    MapScreen.mapstage.addActor(castle2);
+	    	                	    castle2.spritePos(320, 320);
 	    	                	
 	    	                	
 	    	                	}
 	    	                }
 	    	            });
-	    	            
+	    	            */
 	    	            MapScreen.mapstage.addActor(mbutton);
 	    	            mbutton.setPosition(X+16,Y);
 	    	            mbutton.addListener(new ClickListener(){
 	    	                @Override
 	    	                public void clicked(InputEvent event, float x, float y) 
 	    	                {
-	    	                	bbutton.remove();
 	    	                	mbutton.remove();
 	    	                	//bbutton.remove();
 	    	                	    	                	
@@ -213,11 +186,14 @@ public class CastleBase extends MyActor
 	    	                	{
 	    	                		MapScreen.mygame.N[MapScreen.mygame.turn].Build("market");
 	    	                		//visual market
-	    	                		
+	    	                		/*
 	    	                		Texture t = new Texture("market.png");
-									MyActor ma = new MyActor(t, "market");
-									MapScreen.mapstage.addActor(ma);
-									ma.spritePos(X+16, Y);
+	    	                		Sprite m = new Sprite(t);
+	    	                		MapScreen.batch.begin();
+	    	                		m.draw(MapScreen.batch);
+	    	                		m.setPosition(152, 32);
+	    	                		MapScreen.batch.end();
+	    	                		*/		
 	    	                	}
 	    	                	else
 	    	                	{
@@ -236,18 +212,6 @@ public class CastleBase extends MyActor
 		});
 	}
 	
-	public static void deathcheck()
-	  {
-		  for(int i=0; i<castlebases.size; i++)
-		  {
-			  if(castlebases.get(i).ent.commander == "Dead")
-			  {
-				  castlebases.get(i).remove();
-				  castlebases.removeIndex(i);
-			  }
-		  }
-		  
-	  }
 	
 	public void spritePos(float x, float y){
 		sprite.setPosition(x, y);

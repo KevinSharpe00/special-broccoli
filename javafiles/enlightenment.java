@@ -22,7 +22,6 @@ import com.badlogic.gdx.math.Vector2;
 //opens window and shit
 public class enlightenment extends Game
 {
-
 	@Override
 	public void create() 
 	{

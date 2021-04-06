@@ -36,12 +36,10 @@ public class Entity //does it extend or implement something?
     
     boolean Move(Tile T)
     {
-    	//Do movement
     	exhausted = true;
         //unrestricted
         position = T;
         return exhausted;
-       
         
         
     }

@@ -8,40 +8,18 @@ import com.badlogic.gdx.math.Vector3;
 public class MapInputHandler implements InputProcessor
 {
 
-	int w = 0;
-	int x = 0;
-	int y = 0;
-	int z = 0;
 	static EntityActor mover;
 	@Override
 	public boolean keyDown(int keycode) 
-	{	
-		if((keycode == Input.Keys.LEFT) & (w < 8))
-		{
-			//object.w++;
-			w++;
-			x--;
+	{
+		if(keycode == Input.Keys.LEFT)
 	        MapScreen.camera.translate(-32,0);
-		}
-	    if((keycode == Input.Keys.RIGHT) & (x < 12))
-	    {
-	    	x++;
-	    	w--;
+	    if(keycode == Input.Keys.RIGHT)
 	        MapScreen.camera.translate(32,0);
-	    }
-	    if((keycode == Input.Keys.UP) & (y < 11))
-	    {
-	    	y++;
-	    	z--;
-	    
+	    if(keycode == Input.Keys.UP)
 	        MapScreen.camera.translate(0,32);
-	    }
-	    if((keycode == Input.Keys.DOWN) & (z < 8))
-	    {
-	    	z++;
-	    	y--;
+	    if(keycode == Input.Keys.DOWN)
 	        MapScreen.camera.translate(0,-32);
-	    }
 	    //if(keycode == Input.Keys.NUM_1)
 	      //  tiledMap.getLayers().get(0).setVisible(!tiledMap.getLayers().get(0).isVisible());
 		return false;

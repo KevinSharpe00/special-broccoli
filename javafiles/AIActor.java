@@ -28,31 +28,9 @@ public class AIActor extends Actor
 		current = this;
 		entity = e;
 		spriteSet(entity.sprite.getX(), entity.sprite.getY());
-		//TODO: CHECK if THIS WORK
-		//setTouchable(Touchable.disabled); commented out so that we can mouse over and get unit stats
+		setTouchable(Touchable.disabled);
 		
 		AIActors.add(current);
-		
-		
-		addListener(new InputListener() 
-		{
-			
-			@Override
-			  public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor)
-				{
-					//Gdx.app.log("HP:", String.valueOf(entity.health));
-					MapScreen.unitinfolabel.setText("\n    HP: " + String.valueOf(entity.health) + "\n    DMG: " + String.valueOf(entity.damage) + "\n    MOV: " + String.valueOf(entity.range));
-					
-				}
-			  
-			  
-			  @Override
-				public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
-				{
-				  MapScreen.unitinfolabel.setText(" ");
-				}
-		});
-		
 		
 	  }
 	 
@@ -72,9 +50,10 @@ public class AIActor extends Actor
 		  entity.Move(T);
 		  System.out.println("X: " + tx + " Y: " + ty);
 		  }
-		  MapScreen.mygame.ClearSwords();
-		  MapScreen.mygame.SwordCheck(x, y);
-		  
+		  else
+		  {
+			  System.out.println("no");
+		  }
 	  }
 	  
 	  public void unrestrictedMove(float x, float y)

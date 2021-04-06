@@ -7,7 +7,7 @@ enum landscapes
 
 enum buildings
 {
-	market, castle, base, mine
+	market, castle, base
 }
 
 
@@ -116,11 +116,6 @@ public class Tile {
 		else if(build == "base")
 		{
 			b[0] = buildings.base;
-			ret = true;
-		}
-		else if(build == "mine")
-		{
-			b[0] = buildings.mine;
 			ret = true;
 		}
 		return ret;	

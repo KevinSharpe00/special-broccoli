@@ -28,7 +28,7 @@ public class Map {
 		char m = 'm';
 		char h = 'h';
 		char p = 'p';
-		//outer perimeter of ocean
+		//outer perimiter of ocean
 		for(int a = 0; a < length; a++)
 		{
 			tiles[0][29 - a].setland(w);
@@ -45,24 +45,24 @@ public class Map {
 		}
 		
 			//south coast
-			tiles[4][1].setland(p);
-			tiles[5][1].setland(p);
-			tiles[9][1].setland(p);
-			tiles[10][1].setland(p);
-			tiles[11][1].setland(p);
-			tiles[14][1].setland(p);
-			tiles[15][1].setland(p);
-			tiles[26][1].setland(p);
-			tiles[27][1].setland(p);
-			tiles[29][1].setland(p);
-			tiles[30][1].setland(p);
-			tiles[31][1].setland(p);
+			tiles[4][29 - 28].setland(p);
+			tiles[5][29 - 28].setland(p);
+			tiles[9][29 - 28].setland(p);
+			tiles[10][29 - 28].setland(p);
+			tiles[11][29 - 28].setland(p);
+			tiles[14][29 - 28].setland(p);
+			tiles[15][29 - 28].setland(p);
+			tiles[26][29 - 28].setland(p);
+			tiles[27][29 - 28].setland(p);
+			tiles[29][29 - 28].setland(p);
+			tiles[30][29 - 28].setland(p);
+			tiles[31][29 - 28].setland(p);
 			
-			tiles[20][2].setland(w);
-			tiles[21][2].setland(w);
-			tiles[34][2].setland(w);
-			tiles[35][2].setland(w);
-			tiles[36][2].setland(w);
+			tiles[20][29 - 27].setland(w);
+			tiles[21][29 - 27].setland(w);
+			tiles[34][29 - 27].setland(w);
+			tiles[35][29 - 27].setland(w);
+			tiles[36][29 - 27].setland(w);
 			
 			//north coast
 			tiles[11][29 - 1].setland(p);
