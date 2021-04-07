@@ -39,7 +39,7 @@ public class SettlerActor extends EntityActor
 	 
 	 
 	//maybe inherit and change a bit to do different things on touch???
-	  public SettlerActor(Entity e, final String actorName) 
+	  public SettlerActor(final Entity e, final String actorName) 
 	  {
 		 super(e, actorName);
 		 current = this;
@@ -76,22 +76,15 @@ public class SettlerActor extends EntityActor
 	  	                if(MapScreen.mygame.N[MapScreen.mygame.turn].materials >= 0)
 	  	                {
 	  	                	MapScreen.mygame.N[MapScreen.mygame.turn].Build("castle");
-	  	                		//visual market
-	  	                		/*
-	  	                		Texture t = new Texture("market.png");
-	  	                		Sprite m = new Sprite(t);
-	  	                		MapScreen.batch.begin();
-	  	                		m.draw(MapScreen.batch);
-	  	                		m.setPosition(152, 32);
-	  	                		MapScreen.batch.end();
-	  	                		*/
+	  	                		
 	  	                	Texture castlegraphic = new Texture(Gdx.files.internal("castle.png"));
-	  	                	CastleBase castle2 = new CastleBase(castlegraphic,"base1");
+	  	                	MapScreen.mygame.AddEntity(40,  0,  0, MapScreen.mygame.map.tiles[entity.position.ipos][entity.position.jpos], "playerbase", castlegraphic);
+	  	                	MapScreen.mygame.N[0].TileBonus(MapScreen.mygame.map.tiles[entity.position.ipos][entity.position.jpos]);
+	  	                	CastleBase castle2 = new CastleBase(MapScreen.mygame.entities.get(MapScreen.mygame.entities.size() -1),"base1");
 	  	                	MapScreen.mapstage.addActor(castle2);
 	  	                	castle2.spritePos(entity.sprite.getX(), entity.sprite.getY());
 	  	                	
-	  	                	MapScreen.mygame.N[MapScreen.mygame.turn].TileBonus(MapScreen.mygame.map.tiles[(int) (entity.sprite.getX()/16) ]  [(int) (entity.sprite.getY()/16)]);
-	  	                	current.remove();
+	  	                	entity.health = 0;
 	  	                	
 	  	                	}
 	  	                }
@@ -159,5 +152,10 @@ public class SettlerActor extends EntityActor
 		  
 		  bbutton.remove();
           movebutton.remove();
+          
+          MapScreen.mygame.ClearSwords();
+    	  MapScreen.mygame.SwordCheck(x, y);
 	  }
+	  
+	  
 }

@@ -1,11 +1,18 @@
 package com.mygdx.game;
 
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -33,6 +40,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -42,8 +50,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MapScreen implements Screen
 {
-	
-    Texture img;
+	static SaveData sd;
+	Preferences pref = Gdx.app.getPreferences("pref");
+	Texture img;
     TiledMap tiledMap;
    public static OrthographicCamera camera;
    TiledMapRenderer tiledMapRenderer;
@@ -65,23 +74,30 @@ public class MapScreen implements Screen
    static MyGame mygame;
    Label label;
    static AI ai;
-  // private Texture box;
-   TechButtons Tech;
+   Sprite coint;
+   Sprite matt;
+   static Label unitinfolabel;
    public Texture texture2;
-   public static Label label2;
-   public static Label label3;
+   public static Label TechBackgroundLabel;
+   public static Label StatLabel;
+   public static Label TechInfoLabel;
+   TechButtons Tech;
    
+  // private Texture box;
    
    public MapScreen(enlightenment game, MyGame mg)
-   {
+   {	   
+	   
+	   
 	   this.mygame = mg;
+	   sd = new SaveData(mygame);
 	   atlas = new TextureAtlas("menusprites.txt");
 	   skin = new Skin(atlas);
 	   mainTable = new Table(skin);
 	   mainTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	   
 	   float w = Gdx.graphics.getWidth();
-	   float h = Gdx.graphics.getHeight();
+		float h = Gdx.graphics.getHeight();
 	   this.game = game;
 	   
 	   camera = new OrthographicCamera();
@@ -96,11 +112,14 @@ public class MapScreen implements Screen
        texture = new Texture(Gdx.files.internal("orangeswordsman.png"));
        mygame.AddEntity(40, 20, 99, mygame.map.tiles[10][10], "Player 3", texture);
        entityactor = new EntityActor(mygame.entities.get(0), "sword 1");
-       //change type later
-	   //TODO: add ai castle
-       Texture castlegraphic = new Texture(Gdx.files.internal("castle.png"));
-       CastleBase castle = new CastleBase(castlegraphic,"base1");
+
        
+       Texture castlegraphic = new Texture(Gdx.files.internal("castle.png"));
+       mygame.AddEntity(40,  0,  0,  mygame.map.tiles[8][2], "Player 1", castlegraphic);
+       mygame.N[0].TileBonus(mygame.map.tiles[8][2]);
+       CastleBase castle = new CastleBase(mygame.entities.get(1),"base1");
+       
+       //background
        texture2 = new Texture(Gdx.files.internal("TechBackground.png"));
        
        blocky = new BitmapFont(Gdx.files.internal("blocky.fnt"));
@@ -137,16 +156,21 @@ public class MapScreen implements Screen
        BitmapFont font = new BitmapFont();
        Texture te = new Texture(Gdx.files.internal("Brownbox.png"));
       TextureRegionDrawable t = new TextureRegionDrawable(new TextureRegion(te));
+
        
       //money label
        Label.LabelStyle style = new LabelStyle();
        style.background = t; // Set the drawable you want to use
        style.font = font;
        	
-       label = new Label("   Tech Points: " + String.valueOf(mygame.N[0].TechPoints) +"                                                        "  , style);
+       label = new Label("   Money: " + String.valueOf(mygame.N[0].money) +"                                            "  , style);
        stage.addActor(label);
        
-       //label.setText("   Money: " + String.valueOf(mygame.N[0].money) +"   ");
+       //unit info label
+       unitinfolabel = new Label("\n                          \n \n \n \n",style);
+       stage.addActor(unitinfolabel);
+       unitinfolabel.setPosition(0, 280);
+       unitinfolabel.setAlignment(Align.topLeft);
        
        multiplexer = new InputMultiplexer();
        multiplexer.addProcessor(stage);
@@ -157,28 +181,20 @@ public class MapScreen implements Screen
        entityactor.unrestrictedMove(160, 160);
        mapstage.addActor(castle);
        castle.spritePos(128, 32);
-       mygame.N[mygame.turn].TileBonus(mygame.map.tiles[(128/16)]  [(32/16)]);
        ai = new AI(game,mygame);
        
        
-
        
        
+       sd.LoadEntity();
+       sd.LoadNation();
+       mygame.N[0].TileBonus(mygame.map.tiles[8][2]);
+       mygame.N[1].TileBonus(mygame.map.tiles[24][20]);
        
        
-       
-       
-       
-       //Music music = Gdx.audio.newMusic(Gdx.files.internal("loopedmusic.mp3"));
-       //music.setLooping(true);
-	   //music.play();
-	   
-	   
-	   
-	   
-	   
-	   
-	   
+       Music music = Gdx.audio.newMusic(Gdx.files.internal("loopedmusic.mp3"));
+       music.setLooping(true);
+	   music.play();
 	   
 	   
 	   
@@ -203,28 +219,28 @@ public void show()
     ImageButton swordbutton = new ImageButton(swbutton);
     ImageButton techbutton = new ImageButton(tbutton);
     
+    
     swordbutton.addListener(new ClickListener(){
         @Override
         public void clicked(InputEvent event, float x, float y) 
         {
+        	//printing the value that was stored
+        	
+        	pref.putInteger("storage", pref.getInteger("storage") + 1);
+     	   	pref.flush();
+            System.out.println(pref.getInteger("storage"));
+            
+           
+        	
+            
+            //literally everything else
         	mygame.ChangeTurn();
-        	System.out.print("Current turn:  " );
-        	System.out.print(mygame.turn);
         	System.out.println();
-        	//temporary
-        	Array<Actor> stageActors = mapstage.getActors();
-        	int i = 0;
-        	while(i<stageActors.size)
-        	{
-        		Actor a = stageActors.get(i);
-        		a.toString();
-        		Gdx.app.log("actor: ", a.toString());
-        		 i=i+1;
-        	}
+        	
+        	//saving stuff
+        	sd.fullSave();
         }
     });
-   
-    
     
     techbutton.addListener(new ClickListener() 
     {	@Override
@@ -236,8 +252,8 @@ public void show()
         Label.LabelStyle style2 = new LabelStyle();
         style2.background = t2; // Set the drawable you want to use
         style2.font = font;
-        label2 = new Label("\n " , style2);
-        stage.addActor(label2);	
+        TechBackgroundLabel = new Label("\n " , style2);
+        stage.addActor(TechBackgroundLabel);	
     	
         BitmapFont font3 = new BitmapFont();
         Texture te3 = new Texture(Gdx.files.internal("Brownbox.png"));
@@ -245,22 +261,24 @@ public void show()
         Label.LabelStyle style3 = new LabelStyle();
         style3.background = t; // Set the drawable you want to use
         style3.font = font3;
-        label3 = new Label("\n                                         \n\n", style3);
-        label3.setPosition(353,0);
-        stage.addActor(label3);
+        StatLabel = new Label("\n                                         \n\n", style3);
+        StatLabel.setPosition(353,0);
+        stage.addActor(StatLabel);
     	
-    	
+        TechInfoLabel = new Label("\n                                         \n\n", style3);
+        TechInfoLabel.setPosition(0,0);
+        stage.addActor(TechInfoLabel);
     	
     	Tech = new TechButtons(stage);
     	Tech.techMenu();
     
         }
     });
-    
-    
+   
     mainTable.add(techbutton);
     mainTable.add(swordbutton);
     stage.addActor(mainTable);
+    
 }
 
 @Override
@@ -281,11 +299,18 @@ public void render(float delta)
     //batch.end();
     
     //awful terrible code done in awful terrible place so that the label updates.
-    label.setText("    Money: " + String.valueOf(mygame.N[0].money) + "   Tech Points: " + String.valueOf(mygame.N[0].TechPoints)+ "   Materials: " + String.valueOf(mygame.N[0].materials));
+    label.setText("        Money: " + String.valueOf(mygame.N[0].money) + "  Materials: " + String.valueOf(mygame.N[0].materials));
     stage.act();
     mapstage.act();
     mapstage.draw();
     stage.draw();
+    
+   // batch.begin();
+   // coint.draw(batch);
+   // matt.draw(batch);
+   // coint.setPosition();
+   // matt.setPositoin();
+   // batch.end();
 }
 @Override
 public void resize(int width, int height) 
@@ -324,4 +349,23 @@ public void dispose()
 
 
 
-}
+}//end of class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

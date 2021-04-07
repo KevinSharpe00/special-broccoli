@@ -17,7 +17,7 @@ public class Entity //does it extend or implement something?
     Tile position;
     String commander;
     boolean exhausted;
-    
+    String building;
 	Texture tex;
     Sprite sprite;
     
@@ -32,14 +32,30 @@ public class Entity //does it extend or implement something?
         tex = t;
         sprite = new Sprite(tex);
         exhausted = false;
+        building = " ";
+    }
+    public Entity(double h, double d, int r, Tile p, String c, Texture t, String m)
+    {
+        health = h;
+        damage = d;
+        range = r;//just ignore for now
+        position = p;
+        commander = c;
+        tex = t;
+        sprite = new Sprite(tex);
+        exhausted = false;
+        building = m;
     }
     
     boolean Move(Tile T)
     {
+    	
+    	//Do movement
     	exhausted = true;
         //unrestricted
         position = T;
         return exhausted;
+       
         
         
     }

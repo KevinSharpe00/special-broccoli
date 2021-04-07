@@ -84,6 +84,12 @@ public class MyGame {
 		entities.add(E);
 		entity_counter++;
 	}
+	public void AddEntity(double h, double d, int r, Tile p, String c, Texture t, String m)
+	{
+		Entity E = new Entity(h, d, r, p, c, t, m);
+		entities.add(E);
+		entity_counter++;
+	}
 	
 	public void AddSwordsman(Tile p, String c)
 	{
@@ -168,7 +174,7 @@ public class MyGame {
 	}
 	
 	public void endTurnBattles()
-	{//makes units batle twice
+	{//makes units battle twice
 		for(int i = 0; i < entity_counter; i++)
 		{
 			for(int j = 0; j < entity_counter; j++)
@@ -177,14 +183,13 @@ public class MyGame {
 				{
 					Battle(entities.get(i), entities.get(j));
 				}
-				else
-				{
-					//no battle needed;
-				}
 				
 			}
 		}
 	}
+	
+	
+	
 	
 	
 	
@@ -194,6 +199,14 @@ public class MyGame {
 		{
 			if(entities.get(i).commander == "Dead" || entities.get(i).health <= 0)
 			{
+				if(entities.get(i).building == "mine")
+				{
+					N[0].mine_count--;
+				}
+				if(entities.get(i).building == "market")
+				{
+					N[0].market_count--;
+				}
 				EntityActor.deathcheck();
 				AIActor.deathcheck();
 				entities.remove(i);
@@ -204,7 +217,39 @@ public class MyGame {
 	}
 	
 	
-	
+	public void SwordCheck(float x, float y)
+	{//summons swords
+		for(int i = 0; i < entity_counter; i++)
+		{
+			for(int j = 0; j < entity_counter; j++)
+			{
+				if(i != j && entities.get(i).position == entities.get(j).position)
+				{
+					if(entities.get(i).getCommander() != entities.get(j).getCommander())
+					{
+						Texture t = new Texture("bettercrossedswords.png");
+						SwordActor sw = new SwordActor(t, "Swords");
+						MapScreen.mapstage.addActor(sw);
+						sw.spritePos(x, y);
+					}
+					
+				}				
+			}
+		}
+	}
+	public void ClearSwords()
+	{
+		for(int i = 0; i <  SwordActor.swords.size; i++)
+		{
+			
+				SwordActor.swords.get(i).remove();
+				SwordActor.swords.removeIndex(i);
+				
+			
+		}
+		
+		
+	}
 	
 	
 	
@@ -277,25 +322,26 @@ public class MyGame {
 		
 	}
 	
+	
 	public void turnlose()
 	{
+		boolean castle = false;
+		boolean turn = false;
+		if(CastleBase.castlebases.size == 0)
+		{
+			castle = true;
+		}		
 		if(turncount >= 200)
+		{
+			turn = true;
+		}
+		
+		
+		if(turn | castle) 
 		{
 			((Game)Gdx.app.getApplicationListener()).setScreen(new LoseScreen());
 		}
-	}
-	
-	//move sprite
-	/*
-		public void setSprite(int i, float x, float y)
-		{
-			entities.get(i).setspritepos(x, y);
-		}
 		
-		//draw sprite
-		public void drawSprite(int i)
-			{
-				entities.get(i).makesprite(sprite_batch);
-			}*/
+	}
 		
 }

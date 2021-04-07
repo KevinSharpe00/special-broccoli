@@ -21,7 +21,7 @@ public class MyActor extends Actor
 		sprite = new Sprite(texture);
 	 
 		spritePos(sprite.getX(), sprite.getY());
-		setTouchable(Touchable.enabled);
+		/*setTouchable(Touchable.enabled);
 		
 		
 		addListener(new InputListener() {
@@ -32,7 +32,7 @@ public class MyActor extends Actor
 			//MapScreen.movestate();
 			return true;
 		  }
-		});
+		});*/
 			
 	  }
 	 

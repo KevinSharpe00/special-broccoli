@@ -45,6 +45,7 @@ public class Nation
 	
 	
 	
+	
 	public Nation()
 	{
 		money = 0;
@@ -76,6 +77,7 @@ public class Nation
 		Tech_boosts[12] = "Unit HP + 10";
 		Tech_boosts[13] = "Unit HP + 5 \n      Sword DMG + 5";
 		Tech_boosts[14] = "Unit HP + 10 \n      Sword DMG + 10 \n      Unit move + 1";
+		
 		
 	}
 	
@@ -324,7 +326,7 @@ public class Nation
 		money += i;
 	}
 	
-	public void AddMaterials(double m)
+	public void AddMaterials(double m) 
 	{
 		materials += m;
 	}
@@ -344,7 +346,17 @@ public class Nation
 			}
 			else
 			{
-				System.out.println("Not enough Resources");
+				System.out.println("Not enough Money");
+			}
+		}
+		else if(building == "mine")
+		{
+			if(money >= 20)
+			{
+				money -= 20;
+				System.out.println("mine built");
+				built = true;
+				mine_count++;
 			}
 		}
 		else if(building == "castle")
@@ -358,7 +370,7 @@ public class Nation
 			}
 			else
 			{
-				System.out.println("Resources");
+				System.out.println("Not enough Money");
 			}
 		}
 		else
