@@ -1,0 +1,35 @@
+buttonsprites.png
+size: 64, 122
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+goldbutton
+  rotate: false
+  xy: 0, 0
+  size: 41, 45
+  orig: 41, 45
+  offset: 0, 0
+  index: -1
+greenbutton
+  rotate: false
+  xy: 0, 45
+  size: 32, 32
+  split: 20, 10, 2, 2
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+redbutton
+  rotate: false
+  xy: 32, 45
+  size: 32, 32
+  split: 20, 10, 2, 2
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+silverbutton
+  rotate: false
+  xy: 0, 77
+  size: 41, 45
+  orig: 41, 45
+  offset: 0, 0
+  index: -1

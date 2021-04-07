@@ -1,5 +1,5 @@
 menusprites.png
-size: 288, 48
+size: 480, 48
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -10,37 +10,65 @@ Brownbox
   orig: 48, 48
   offset: 0, 0
   index: -1
-brownclock
+browncastle
   rotate: false
   xy: 48, 0
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-BrownMenu
+brownclock
   rotate: false
   xy: 96, 0
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-brownsword
+browncoin
   rotate: false
   xy: 144, 0
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-hammerbutton
+BrownMenu
   rotate: false
   xy: 192, 0
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-PersonButton
+brownsword
   rotate: false
   xy: 240, 0
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Gearbutton
+  rotate: false
+  xy: 288, 0
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+hammerbutton
+  rotate: false
+  xy: 336, 0
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+PersonButton
+  rotate: false
+  xy: 384, 0
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Xbutton
+  rotate: false
+  xy: 432, 0
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
