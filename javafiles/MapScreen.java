@@ -241,7 +241,8 @@ public void show()
         	System.out.println();
         	
         	//saving stuff
-        	sd.fullSave();
+        	sd.SaveEntity();
+        	sd.SaveNation();
         }
     });
     
