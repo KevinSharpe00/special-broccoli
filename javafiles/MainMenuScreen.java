@@ -90,7 +90,7 @@ public class MainMenuScreen implements Screen
         textButtonStyle.font = blocky;
         
         TextButton playButton = new TextButton("Play", textButtonStyle);
-        TextButton optionsButton = new TextButton("Options", textButtonStyle);
+        TextButton loadButton = new TextButton("Load", textButtonStyle);
         TextButton exitButton = new TextButton("Exit", textButtonStyle);
         
         
@@ -100,7 +100,15 @@ public class MainMenuScreen implements Screen
             public void clicked(InputEvent event, float x, float y) 
             {
             	MyGame mg = new MyGame();
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new MapScreen(game,mg));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new MapScreen(game,mg, false));
+            }
+        });
+        loadButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) 
+            {
+            	MyGame mg = new MyGame();
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new MapScreen(game,mg, true));
             }
         });
         exitButton.addListener(new ClickListener(){
@@ -115,7 +123,7 @@ public class MainMenuScreen implements Screen
         
         mainTable.add(playButton).pad(20);
         mainTable.row();
-        //mainTable.add(optionsButton).pad(20); //TODO: make options do something
+        mainTable.add(loadButton).pad(20); //TODO: make options do something
         mainTable.row();
         mainTable.add(exitButton);
 

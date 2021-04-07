@@ -34,7 +34,7 @@ public class AI
 		this.mygame = mg;
 		   Texture evilcastle = new Texture(Gdx.files.internal("evilcastle.png"));
 	       mygame.AddEntity(40, 0, 0, mygame.map.tiles[24][20], "Player 2", evilcastle);
-	       AIActor evilbase = new AIActor(mygame.entities.get(2), "base2");
+	       AIActor evilbase = new AIActor(mygame.entities.get(1), "base2");
 	       MapScreen.mapstage.addActor(evilbase);//TODO: Should probably pass this into the constructor instead
 	       evilbase.setName("aibase");
 	       //aibase starts here, maybe change later?

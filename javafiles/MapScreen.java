@@ -51,6 +51,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class MapScreen implements Screen
 {
 	static SaveData sd;
+	CastleBase castle;
 	Preferences pref = Gdx.app.getPreferences("pref");
 	Texture img;
     TiledMap tiledMap;
@@ -85,7 +86,7 @@ public class MapScreen implements Screen
    
   // private Texture box;
    
-   public MapScreen(enlightenment game, MyGame mg)
+   public MapScreen(enlightenment game, MyGame mg, boolean b)
    {	   
 	   
 	   
@@ -109,16 +110,15 @@ public class MapScreen implements Screen
 	   tiledMap = new TmxMapLoader().load("testmap.tmx");
 	   tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		
-       texture = new Texture(Gdx.files.internal("orangeswordsman.png"));
-       mygame.AddEntity(40, 20, 99, mygame.map.tiles[10][10], "Player 3", texture);
-       entityactor = new EntityActor(mygame.entities.get(0), "sword 1");
+	   
+		   	
 
        
-       Texture castlegraphic = new Texture(Gdx.files.internal("castle.png"));
-       mygame.AddEntity(40,  0,  0,  mygame.map.tiles[8][2], "Player 1", castlegraphic);
-       mygame.N[0].TileBonus(mygame.map.tiles[8][2]);
-       CastleBase castle = new CastleBase(mygame.entities.get(1),"base1");
-       
+       	Texture castlegraphic = new Texture(Gdx.files.internal("castle.png"));
+       	mygame.AddEntity(40,  0,  0,  mygame.map.tiles[8][2], "Player 1", castlegraphic);
+       	mygame.N[0].TileBonus(mygame.map.tiles[8][2]);
+       	castle = new CastleBase(mygame.entities.get(0),"base1");
+	   
        //background
        texture2 = new Texture(Gdx.files.internal("TechBackground.png"));
        
@@ -177,19 +177,22 @@ public class MapScreen implements Screen
        multiplexer.addProcessor(mapstage);
        InputProcessor mapmove = new MapInputHandler();
        multiplexer.addProcessor(mapmove);
-       mapstage.addActor(entityactor);
-       entityactor.unrestrictedMove(160, 160);
+       
+      
        mapstage.addActor(castle);
        castle.spritePos(128, 32);
+       
        ai = new AI(game,mygame);
        
        
-       
-       
-       sd.LoadEntity();
-       sd.LoadNation();
-       mygame.N[0].TileBonus(mygame.map.tiles[8][2]);
-       mygame.N[1].TileBonus(mygame.map.tiles[24][20]);
+       if(b == true)
+       {
+    	   sd.DestroyUnits();
+    	   sd.LoadEntity();
+    	   sd.LoadNation();
+    	   mygame.N[0].TileBonus(mygame.map.tiles[8][2]);
+    	   mygame.N[1].TileBonus(mygame.map.tiles[24][20]);
+       }
        
        
        Music music = Gdx.audio.newMusic(Gdx.files.internal("loopedmusic.mp3"));
