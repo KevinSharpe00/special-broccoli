@@ -1,43 +1,16 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class TechButtons {
 
@@ -45,9 +18,13 @@ public class TechButtons {
 	public Texture texture;
 	public SpriteBatch batch;
 	int t;
-	
+	private TextureAtlas atlas;
+	protected Skin skin;
+	   
 	public TechButtons(Stage s)
 	{
+		atlas = new TextureAtlas("menusprites.txt");
+		skin = new Skin(atlas);
 		this.stage = s;
 		t = MapScreen.mygame.turn;
 		MapScreen.TechInfoLabel.setText("     Tech Points: " + String.valueOf(MapScreen.mygame.N[0].TechPoints));
@@ -57,15 +34,15 @@ public class TechButtons {
 	public void techMenu()
 	{
 
-	final ImageButtonStyle moneybutton = UImanager.configbutton(MapScreen.skin, "browncoin");
+	final ImageButtonStyle moneybutton = UImanager.configbutton(skin, "browncoin");
 	//set to gear
-	final ImageButtonStyle techbutton = UImanager.configbutton(MapScreen.skin, "browncoin");
-	final ImageButtonStyle hammerbutton = UImanager.configbutton(MapScreen.skin, "hammerbutton");
-	final ImageButtonStyle buildingbutton = UImanager.configbutton(MapScreen.skin, "browncastle");
+	final ImageButtonStyle techbutton = UImanager.configbutton(skin, "Gearbutton");
+	final ImageButtonStyle hammerbutton = UImanager.configbutton(skin, "hammerbutton");
+	final ImageButtonStyle buildingbutton = UImanager.configbutton(skin, "browncastle");
 	//set to Xbutton
-	final ImageButtonStyle closebutton = UImanager.configbutton(MapScreen.skin, "Brownbox");
-	final ImageButtonStyle swordbutton = UImanager.configbutton(MapScreen.skin, "brownsword");
-	final ImageButtonStyle personbutton = UImanager.configbutton(MapScreen.skin, "PersonButton");
+	final ImageButtonStyle closebutton = UImanager.configbutton(skin, "Xbutton");
+	final ImageButtonStyle swordbutton = UImanager.configbutton(skin, "brownsword");
+	final ImageButtonStyle personbutton = UImanager.configbutton(skin, "PersonButton");
 	
 	final ImageButton	Tech0button = new ImageButton(moneybutton);
 	final ImageButton	Tech1button = new ImageButton(hammerbutton);

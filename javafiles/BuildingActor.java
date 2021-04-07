@@ -14,7 +14,6 @@ public class BuildingActor extends EntityActor{
 		entity = e;
 		spriteSet(entity.sprite.getX(), entity.sprite.getY());
 		setTouchable(Touchable.disabled);
-		//this work?/??GER?GETRG????
 		entityActors.add(current);
 		
 	}

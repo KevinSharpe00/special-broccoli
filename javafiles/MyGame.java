@@ -84,6 +84,7 @@ public class MyGame {
 		entities.add(E);
 		entity_counter++;
 	}
+	
 	public void AddEntity(double h, double d, int r, Tile p, String c, Texture t, String m)
 	{
 		Entity E = new Entity(h, d, r, p, c, t, m);
@@ -150,7 +151,7 @@ public class MyGame {
 	{
 		if(A.getpos() == B.getpos())
 		{
-			if(A.getCommander() != B.getCommander())
+			if(!(A.commander.equals(B.commander)))
 			{
 				A.hurt(B.getdamage());
 				if(A.health <= 0)
@@ -199,16 +200,18 @@ public class MyGame {
 		{
 			if(entities.get(i).commander == "Dead" || entities.get(i).health <= 0)
 			{
-				if(entities.get(i).building == "mine")
+				if(entities.get(i).building.equals("mine"))
 				{
 					N[0].mine_count--;
 				}
-				if(entities.get(i).building == "market")
+				if(entities.get(i).building.equals("market"))
 				{
 					N[0].market_count--;
 				}
+				
 				EntityActor.deathcheck();
 				AIActor.deathcheck();
+				CastleBase.deathcheck();
 				entities.remove(i);
 				i--;
                 entity_counter--;
@@ -223,14 +226,14 @@ public class MyGame {
 		{
 			for(int j = 0; j < entity_counter; j++)
 			{
-				if(i != j && entities.get(i).position == entities.get(j).position)
+				if(i != j && entities.get(i).position == entities.get(j).position && !(entities.get(i).range==0||entities.get(j).range==0))
 				{
-					if(entities.get(i).getCommander() != entities.get(j).getCommander())
+					if((!(entities.get(i).commander.equals(entities.get(j).commander))))
 					{
 						Texture t = new Texture("bettercrossedswords.png");
 						SwordActor sw = new SwordActor(t, "Swords");
 						MapScreen.mapstage.addActor(sw);
-						sw.spritePos(x, y);
+						sw.spritePos(entities.get(i).position.ipos*16,entities.get(i).position.jpos*16);
 					}
 					
 				}				
@@ -243,11 +246,11 @@ public class MyGame {
 		{
 			
 				SwordActor.swords.get(i).remove();
-				SwordActor.swords.removeIndex(i);
+				//SwordActor.swords.removeIndex(i);
 				
 			
 		}
-		
+		SwordActor.swords.clear();
 		
 	}
 	
@@ -315,7 +318,7 @@ public class MyGame {
 		this.ai = MapScreen.ai;
 		if(ai.AILost())
 		{
-	    	((Game)Gdx.app.getApplicationListener()).setScreen(new WinScreen());
+	    	((Game)Gdx.app.getApplicationListener()).setScreen(new WinScreen(thisgame,MapScreen.sd));
 		}
 		ai.AISimpleCheck();
 		
@@ -330,16 +333,17 @@ public class MyGame {
 		if(CastleBase.castlebases.size == 0)
 		{
 			castle = true;
-		}		
-		if(turncount >= 200)
-		{
-			turn = true;
 		}
+		//removed since the ai is now perfectly capable of killing the player
+		//if(turncount >= 200)
+		//{
+		//	turn = true;
+		//}
 		
 		
 		if(turn | castle) 
 		{
-			((Game)Gdx.app.getApplicationListener()).setScreen(new LoseScreen());
+			((Game)Gdx.app.getApplicationListener()).setScreen(new LoseScreen(thisgame, MapScreen.sd));
 		}
 		
 	}

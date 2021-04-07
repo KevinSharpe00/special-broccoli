@@ -22,7 +22,7 @@ public class Tile {
 	buildings[] b = new buildings[3];
 	//terr character for printing from game
 	char terr;
-	
+	Tile Parent;//TODO:SEE IF THIS WORKS FOR PATHFINDING
 	
 	
 	
@@ -34,6 +34,7 @@ public class Tile {
 		ipos = i;
 		jpos = j;
 		l = landscapes.plains;
+		Parent = null;
 	}
 	
 	/*

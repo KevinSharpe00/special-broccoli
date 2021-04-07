@@ -11,14 +11,14 @@ public class LoseScreen implements Screen
 	private SpriteBatch batch;
 	protected BitmapFont blocky;
 	
-	public LoseScreen()
+	public LoseScreen(MyGame mg, SaveData sd)
 	{
 		blocky = new BitmapFont(Gdx.files.internal("blocky.fnt"));
 		batch = new SpriteBatch();
-		MapScreen.mygame = new MyGame();
-		MapScreen.sd.mg = MapScreen.mygame;
-		MapScreen.sd.clearN();
-		MapScreen.sd.clearunits();
+		mg = new MyGame();
+		sd.mg = mg;
+		sd.clearN();
+		sd.clearunits();
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class LoseScreen implements Screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         batch.begin();
-        blocky.draw(batch,"Max Turns Reached, you lose :(",350,384);
+        blocky.draw(batch," You Lose :(",420,384);
         batch.end();
 		
 	}

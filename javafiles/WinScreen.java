@@ -11,14 +11,14 @@ public class WinScreen implements Screen
 	private SpriteBatch batch;
 	protected BitmapFont blocky;
 	
-	public WinScreen()
+	public WinScreen(MyGame mg, SaveData sd)
 	{
 		blocky = new BitmapFont(Gdx.files.internal("blocky.fnt"));
 		batch = new SpriteBatch();
-		MapScreen.mygame = new MyGame();
-		MapScreen.sd.mg = MapScreen.mygame;
-		MapScreen.sd.clearN();
-		MapScreen.sd.clearunits();
+		mg = new MyGame();
+		sd.mg = mg;
+		sd.clearN();
+		sd.clearunits();
 	}
 
 	@Override

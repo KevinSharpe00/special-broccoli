@@ -18,7 +18,6 @@ public class MapInputHandler implements InputProcessor
 	{	
 		if((keycode == Input.Keys.LEFT) & (w < 8))
 		{
-			//object.w++;
 			w++;
 			x--;
 	        MapScreen.camera.translate(-32,0);
@@ -33,7 +32,6 @@ public class MapInputHandler implements InputProcessor
 	    {
 	    	y++;
 	    	z--;
-	    
 	        MapScreen.camera.translate(0,32);
 	    }
 	    if((keycode == Input.Keys.DOWN) & (z < 8))
@@ -42,6 +40,7 @@ public class MapInputHandler implements InputProcessor
 	    	y--;
 	        MapScreen.camera.translate(0,-32);
 	    }
+	    //TODO:Could be used for different mapmodes?
 	    //if(keycode == Input.Keys.NUM_1)
 	      //  tiledMap.getLayers().get(0).setVisible(!tiledMap.getLayers().get(0).isVisible());
 		return false;
@@ -63,10 +62,10 @@ public class MapInputHandler implements InputProcessor
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) 
 	{
-		//BAD CODE, but it moves it. Consdering we have spent LITERAL HOURS
-		//on trying to move stuff, I'm calling it good.
+		//BAD CODE in a BAD PLACE, but it moves the entity. Consdering we have spent LITERAL HOURS
+		//on trying to move stuff in a grid, I'm calling it good.
 		try
-		{//Gdx.graphics.getWidth(); Gdx.graphics.getHeight();
+		{
 		int X = (screenX/32);
 		X = X*32;
 		int Y = (screenY/32);

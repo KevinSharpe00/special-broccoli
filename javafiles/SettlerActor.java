@@ -27,9 +27,7 @@ public class SettlerActor extends EntityActor
 	SettlerActor current;	
 	ImageButton bbutton;
 	ImageButton movebutton;
-	
-	
-	
+
 	
 	//button stuff
 	TextureAtlas atlas = new TextureAtlas("menusprites.txt");
@@ -37,26 +35,22 @@ public class SettlerActor extends EntityActor
 	 final ImageButtonStyle castlebutton = UImanager.configbutton(skin, "browncastle");
 	 final ImageButtonStyle mvbutton = UImanager.configbutton(skin, "Brownbox");
 	 
-	 
-	//maybe inherit and change a bit to do different things on touch???
-	  public SettlerActor(final Entity e, final String actorName) 
+	  public SettlerActor(Entity e, final String actorName) 
 	  {
 		 super(e, actorName);
 		 current = this;
 		 entity = e;
 		 spriteSet(entity.sprite.getX(), entity.sprite.getY());
 		 setTouchable(Touchable.enabled);
-		 //this work?/??GER?GETRG????
 		 entityActors.add(current);
 		 
 		 
 		
-		
+		//specify right click to add castle
 		 addListener(new ClickListener(Buttons.RIGHT) 
 			{
 			  @Override
 			  public void clicked(InputEvent event, float x, float y)
-			  //public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) 
 			  {
 					 
 				  final ImageButton bbutton = new ImageButton(castlebutton);
@@ -76,14 +70,14 @@ public class SettlerActor extends EntityActor
 	  	                if(MapScreen.mygame.N[MapScreen.mygame.turn].materials >= 0)
 	  	                {
 	  	                	MapScreen.mygame.N[MapScreen.mygame.turn].Build("castle");
-	  	                		
+	  	                		//TODO: ADD CASTLEHP PARAMETER
 	  	                	Texture castlegraphic = new Texture(Gdx.files.internal("castle.png"));
-	  	                	MapScreen.mygame.AddEntity(40,  0,  0, MapScreen.mygame.map.tiles[entity.position.ipos][entity.position.jpos], "playerbase", castlegraphic);
-	  	                	MapScreen.mygame.N[0].TileBonus(MapScreen.mygame.map.tiles[entity.position.ipos][entity.position.jpos]);
+	  	                	MapScreen.mygame.AddEntity(40,  0,  0, MapScreen.mygame.map.tiles[entity.position.ipos][entity.position.jpos], "Player 1", castlegraphic);
 	  	                	CastleBase castle2 = new CastleBase(MapScreen.mygame.entities.get(MapScreen.mygame.entities.size() -1),"base1");
 	  	                	MapScreen.mapstage.addActor(castle2);
 	  	                	castle2.spritePos(entity.sprite.getX(), entity.sprite.getY());
 	  	                	
+	  	                	current.remove();
 	  	                	entity.health = 0;
 	  	                	
 	  	                	}
@@ -101,24 +95,22 @@ public class SettlerActor extends EntityActor
 		              MapInputHandler.mover = current;
 		          }
 		          });
-				  //return true;
 				 }
 			  	
 			}
 			);//end of listener	
 		
-		//second listener
+		//specify left click to move
 		 addListener(new ClickListener(Buttons.LEFT) 
 			{
 			  @Override
 			  public void clicked(InputEvent event, float x, float y)
-			  //public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) 
 			  {
 				 
 
 					  Gdx.app.log("Touch down asset with name ", actorName);
 					  MapInputHandler.mover = current;
-						//return true;
+
 				 
 			  }  
 			}

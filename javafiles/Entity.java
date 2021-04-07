@@ -32,8 +32,9 @@ public class Entity //does it extend or implement something?
         tex = t;
         sprite = new Sprite(tex);
         exhausted = false;
-        building = " ";
+        building = "";
     }
+    
     public Entity(double h, double d, int r, Tile p, String c, Texture t, String m)
     {
         health = h;
@@ -47,9 +48,9 @@ public class Entity //does it extend or implement something?
         building = m;
     }
     
+    
     boolean Move(Tile T)
     {
-    	
     	//Do movement
     	exhausted = true;
         //unrestricted

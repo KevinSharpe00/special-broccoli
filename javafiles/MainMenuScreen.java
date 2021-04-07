@@ -100,9 +100,10 @@ public class MainMenuScreen implements Screen
             public void clicked(InputEvent event, float x, float y) 
             {
             	MyGame mg = new MyGame();
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new MapScreen(game,mg, false));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new MapScreen(game,mg,false));
             }
         });
+        
         loadButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) 
@@ -111,6 +112,7 @@ public class MainMenuScreen implements Screen
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new MapScreen(game,mg, true));
             }
         });
+        
         exitButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) 
@@ -123,9 +125,9 @@ public class MainMenuScreen implements Screen
         
         mainTable.add(playButton).pad(20);
         mainTable.row();
-        mainTable.add(loadButton).pad(20); //TODO: make options do something
+        mainTable.add(loadButton).pad(20);
         mainTable.row();
-        mainTable.add(exitButton);
+        mainTable.add(exitButton).pad(20);
 
         //Add table to stage
         stage.addActor(mainTable);

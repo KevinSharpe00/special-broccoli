@@ -2,18 +2,11 @@ package com.mygdx.game;
 
 import java.util.Vector;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
-import com.badlogic.gdx.utils.Array;
 
 public class AIActor extends Actor
 {
@@ -21,18 +14,15 @@ public class AIActor extends Actor
 	Entity entity;
 	static Vector<AIActor> AIActors = new Vector<AIActor>();
 	AIActor current;
+	int aitype;
 	 
-	//maybe inherit and change a bit to do different things on touch???
 	  public AIActor(Entity e, final String actorName) 
 	  {
 		current = this;
 		entity = e;
 		spriteSet(entity.sprite.getX(), entity.sprite.getY());
-		//TODO: CHECK if THIS WORK
 		//setTouchable(Touchable.disabled); commented out so that we can mouse over and get unit stats
-		
 		AIActors.add(current);
-		
 		
 		addListener(new InputListener() 
 		{
@@ -40,7 +30,7 @@ public class AIActor extends Actor
 			@Override
 			  public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor)
 				{
-					//Gdx.app.log("HP:", String.valueOf(entity.health));
+					//get unit stats on mouse over
 					MapScreen.unitinfolabel.setText("\n    HP: " + String.valueOf(entity.health) + "\n    DMG: " + String.valueOf(entity.damage) + "\n    MOV: " + String.valueOf(entity.range));
 					
 				}
@@ -49,6 +39,7 @@ public class AIActor extends Actor
 			  @Override
 				public void exit(InputEvent event, float x, float y, int pointer, Actor toActor)
 				{
+				  //reset label on mouse off
 				  MapScreen.unitinfolabel.setText(" ");
 				}
 		});
@@ -64,15 +55,18 @@ public class AIActor extends Actor
           Tile T = MapScreen.mygame.map.tiles[tx][ty];
 		  if(entity.exhausted == false && entity.MoveCheck(T))
 		  {
+			  //move visual representation
+			  entity.sprite.setPosition(x, y);
+			  setBounds(entity.sprite.getX(), entity.sprite.getY(), entity.sprite.getWidth(), entity.sprite.getHeight());
 			  
-		  entity.sprite.setPosition(x, y);
-		  setBounds(entity.sprite.getX(), entity.sprite.getY(), entity.sprite.getWidth(), entity.sprite.getHeight());
-		  //coords and entity movement 
-		  entity.Move(T);
+			  //move underlying representation
+			  entity.Move(T);
+			  System.out.println("X: " + tx + " Y: " + ty);
 		  }
+		  //TODO: should both of these be combined into one fxn?
+		  //Spawns and gets rid of swords (to make sprite overlap not a big problem)
 		  MapScreen.mygame.ClearSwords();
 		  MapScreen.mygame.SwordCheck(x, y);
-		  
 	  }
 	  
 	  public void unrestrictedMove(float x, float y)

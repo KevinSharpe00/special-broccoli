@@ -8,21 +8,18 @@ public class Nation
 	double money = 0;
 	int TechPoints = 40;
 	double materials = 20;
-	
 	boolean[] Tech_tree = new boolean[15];//15* unlockable technologies
 	int[] Tech_cost = new int[15];
-	
 	double upkeep = 0;
+	int castle_count = 0;
 	double income = 0;
-	int tech_income = 20;
-	double mat_income = 2;
-	
+	int tech_income = 10;
+	int science;
 	String Owner;
-	
 	int market_count = 0;
 	int market_modifier = 2;
-	int castle_count = 0;
-		
+	double mat_income = 2;
+	
 	int watertile_counter = 0;
 	int mountaintile_counter = 0;
 	int hilltile_counter = 0;
@@ -30,7 +27,7 @@ public class Nation
 	int terr_money = 0;
 	int terr_mat = 0;
 	
-	//tech-related stats
+	
 	int castleHP = 40;
 	int mine_count = 0;
 	int mine_modifier = 2;
@@ -43,15 +40,12 @@ public class Nation
 	
 	
 	
-	
-	
-	
 	public Nation()
 	{
 		money = 0;
 		TechPoints = 100;
-		
 		Tech_tree = new boolean[15];
+		
 		for(int i = 0; i < 15; i++)
 		{
 			Tech_tree[i] = false;
@@ -77,7 +71,6 @@ public class Nation
 		Tech_boosts[12] = "Unit HP + 10";
 		Tech_boosts[13] = "Unit HP + 5 \n      Sword DMG + 5";
 		Tech_boosts[14] = "Unit HP + 10 \n      Sword DMG + 10 \n      Unit move + 1";
-		
 		
 	}
 	
@@ -258,6 +251,8 @@ public class Nation
 		return researched;
 	}
 	
+	
+	
 	public void TileBonus(Tile C)
 	{
 		for(int x = C.ipos - 1; x <= C.ipos +1; x++)
@@ -315,6 +310,10 @@ public class Nation
 					
 		System.out.println("Bonuses Lost");
 	}
+	
+	
+	
+	
 	
 	public void AddTechPoints(int sci)
 	{
@@ -388,14 +387,14 @@ public class Nation
 		income = market_count*market_modifier - upkeep + terr_money + tech_money;
 		AddMoney(income);
 		AddTechPoints(tech_income);
-		mat_income = 2 + terr_mat + tech_mats;
+		mat_income = 2 + terr_mat + tech_mats + mine_count *mine_modifier;
 		AddMaterials(mat_income);
 	}
 	
 	public void printinfo()
 	{
 		System.out.println("Money: " + money);
-		System.out.println("Science: " + TechPoints);
+		System.out.println("Science: " + science);
 		System.out.println("Markets: " + market_count);
 		System.out.println("Castles: " + castle_count);
 	}

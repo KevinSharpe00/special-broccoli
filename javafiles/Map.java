@@ -83,6 +83,19 @@ public class Map {
 		
 			//left to right
 			
+			//islands
+            for(int x2 = 1; x2 <= 4; x2++)
+            {
+                for(int y2 = 11; y2 <= 20; y2++)
+                {
+                    tiles[x2][29 - y2].setland(w);
+                }
+            }
+            tiles[1][29 - 10].setland(w);
+            tiles[15][29 - 6].setland(w);
+            tiles[15][29 - 7].setland(w);
+            tiles[16][29 - 7].setland(w);
+			
 			//river
 			tiles[1][29 - 1].setland(w);
 			tiles[1][29 - 2].setland(w);

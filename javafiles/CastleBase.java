@@ -3,12 +3,10 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
@@ -31,13 +29,7 @@ public class CastleBase extends MyActor
 		current = this;
 		ent = e;
 		castlebases.add(current);
-		
-		//ImageButtonStyle personbutton = new ImageButtonStyle();
-		//personbutton.up = skin.getDrawable("PersonButton");
-		//personbutton.over = skin.getDrawable("PersonButton");
-		//personbutton.down = skin.getDrawable("PersonButton");
-		//personbutton.pressedOffsetX = 1;
-		//personbutton.pressedOffsetY = -1; 
+ 
 		final ImageButtonStyle personbutton = UImanager.configbutton(skin, "PersonButton");
 		final ImageButtonStyle swordbutton = UImanager.configbutton(skin, "brownsword");
 		final ImageButtonStyle hammerbutton = UImanager.configbutton(skin, "hammerbutton");
@@ -84,9 +76,7 @@ public class CastleBase extends MyActor
 	                {
 	                	pbutton.remove();
 	                	hbutton.remove();
-	                	//bbutton.remove();
-	                	//mbutton.remove();
-	                	
+
 	                	final ImageButton sbutton = new ImageButton(swordbutton);
 	                	final ImageButton settlerbutton = new ImageButton(castlebutton);
 	                	
@@ -101,14 +91,15 @@ public class CastleBase extends MyActor
 	    	                	if(MapScreen.mygame.N[MapScreen.mygame.turn].money >= 5)
                                 {
                                 Texture tex = new Texture(Gdx.files.internal("redswordman.png"));
-                                MapScreen.mygame.AddEntity(MapScreen.mygame.N[0].unitHP,MapScreen.mygame.N[0].swordDMG,MapScreen.mygame.N[0].unitmove,MapScreen.mygame.map.tiles[(int) (X/16-1)][(int) (Y/16)],"Player 1",tex);
-                                //Gdx.app.log("entitycounter is:", String.valueOf(MapScreen.mygame.entity_counter));       [MapScreen.mygame.entity_counter-1]
+
+                                //MapScreen.mygame.AddEntity(MapScreen.mygame.,5,3,MapScreen.mygame.map.tiles[(int) (X/16-1)][(int) (Y/16)],"Player 1",tex);
+                                MapScreen.mygame.AddEntity(MapScreen.mygame.N[0].unitHP,MapScreen.mygame.N[0].swordDMG,MapScreen.mygame.N[0].unitmove,MapScreen.mygame.map.tiles[(int) (X/16-1)][(int) (Y/16)],"Player 1",tex);//diff values to account for nation modifier
                                 EntityActor ea = new EntityActor(MapScreen.mygame.entities.get(MapScreen.mygame.entity_counter-1), "redswordguy" + String.valueOf(MapScreen.mygame.entity_counter-1));//MapScreen.mygame.entity_counter
                                 MapScreen.mapstage.addActor(ea);
                                 ea.unrestrictedMove(X-16,Y);
                                 ea.setName("redsword"+String.valueOf(MapScreen.mygame.entity_counter-1));
                                 //takes away money and adds to unit upkeep
-                                MapScreen.mygame.N[MapScreen.mygame.turn].money = MapScreen.mygame.N[MapScreen.mygame.turn].money -5;
+                                MapScreen.mygame.N[MapScreen.mygame.turn].money = MapScreen.mygame.N[MapScreen.mygame.turn].money -10;
                                 MapScreen.mygame.N[MapScreen.mygame.turn].addUnitUpkeep(1);
                                 
                                 }
@@ -133,7 +124,7 @@ public class CastleBase extends MyActor
 	    	                	if(MapScreen.mygame.N[MapScreen.mygame.turn].money >= 10)
                                 {
                                 Texture tex = new Texture(Gdx.files.internal("settler.png"));
-                                MapScreen.mygame.AddEntity(10,1,MapScreen.mygame.N[0].unitmove,MapScreen.mygame.map.tiles[(int) (X/16-1)][(int) (Y/16)],"Player 1",tex);
+                                MapScreen.mygame.AddEntity(10,1,3,MapScreen.mygame.map.tiles[(int) (X/16-1)][(int) (Y/16)],"Player 1",tex);
                                 SettlerActor sa = new SettlerActor(MapScreen.mygame.entities.get(MapScreen.mygame.entity_counter-1), "redswordguy" + String.valueOf(MapScreen.mygame.entity_counter-1));//MapScreen.mygame.entity_counter
                                 MapScreen.mapstage.addActor(sa);
                                 sa.unrestrictedMove(X-16,Y);
@@ -241,12 +232,14 @@ public class CastleBase extends MyActor
 	  {
 		  for(int i=0; i<castlebases.size; i++)
 		  {
-			  if(castlebases.get(i).ent.commander == "Dead")
+			  if(castlebases.get(i).ent.health <= 0)//.ent.commander == "Dead")
 			  {
 				  castlebases.get(i).remove();
 				  castlebases.removeIndex(i);
 			  }
 		  }
+		  
+		  
 		  
 	  }
 	

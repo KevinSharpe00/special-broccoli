@@ -107,11 +107,12 @@ public class SaveData {
 					Texture tex = new Texture(Gdx.files.internal("blueswordman.png"));
 					Entity E = new Entity(h, d, r, MapScreen.mygame.map.tiles[ii][jj], com, tex);
 					MapScreen.mygame.entities.add(E);
-					AI.aientities.add(E);
+					AI.aientities.add(E); //TODO:maybe this shouldn't be static? we'll see
 					MapScreen.mygame.entity_counter++;
 					//add underlying entity representation to actor so it has visual representation
 					AIActor aiu = new AIActor(MapScreen.mygame.entities.get(MapScreen.mygame.entity_counter-1), "blueswordguy" + String.valueOf(MapScreen.mygame.entity_counter-1));
 					MapScreen.mapstage.addActor(aiu);
+					aiu.aitype = AIActor.AIActors.size()%3;
 					ii = 16*(ii);
 				    jj = 16*(jj);
 				    aiu.unrestrictedMove(ii, jj);;//TODO: Change when AI can have multiple castles
@@ -193,16 +194,29 @@ public class SaveData {
 	}
 	
 	public void DestroyUnits()
-	{
-		for(int z = 0; z < EntityActor.entityActors.size; z++)
-		{
-			EntityActor.entityActors.get(z).remove();
-			
-		}
-		MapScreen.mygame.entities.clear();
-		MapScreen.mygame.entity_counter = 0;
-		MapScreen.mapstage.clear();
-	}
+    {
+        for(int z = 0; z < EntityActor.entityActors.size; z++)
+        {
+            EntityActor.entityActors.get(z).remove();
+            
+        }
+        for(int z = 0; z < AIActor.AIActors.size(); z++)
+        {
+            AIActor.AIActors.get(z).remove();
+            AIActor.AIActors.remove(z);
+        }
+        
+        for(int z=0; z<CastleBase.castlebases.size; z++)
+        {      
+            CastleBase.castlebases.get(z).remove();
+            CastleBase.castlebases.removeIndex(z);      
+        }
+              
+          
+        MapScreen.mygame.entities.clear();
+        MapScreen.mygame.entity_counter = 0;
+        MapScreen.mapstage.clear();
+    }
 	
 	//got to add tech tree
 	public void SaveNation()
@@ -371,5 +385,3 @@ public class SaveData {
 	
 	
 }
-
-

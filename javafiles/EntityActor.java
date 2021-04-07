@@ -1,16 +1,12 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.Array;
 
 public class EntityActor extends Actor
@@ -20,14 +16,12 @@ public class EntityActor extends Actor
 	static Array<EntityActor> entityActors = new Array<EntityActor>();
 	EntityActor current;
 	 
-	//maybe inherit and change a bit to do different things on touch???
 	  public EntityActor(Entity e, final String actorName) 
 	  {
 		current = this;
 		entity = e;
 		spriteSet(entity.sprite.getX(), entity.sprite.getY());
 		setTouchable(Touchable.enabled);
-		//this work?/??GER?GETRG????
 		entityActors.add(current);
 		
 		addListener(new InputListener() 
@@ -46,7 +40,6 @@ public class EntityActor extends Actor
 		  @Override
 		  public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor)
 			{
-				//Gdx.app.log("HP:", String.valueOf(entity.health));
 				MapScreen.unitinfolabel.setText("\n    HP: " + String.valueOf(entity.health) + "\n    DMG: " + String.valueOf(entity.damage) + "\n    MOV: " + String.valueOf(entity.range));
 				
 			}
@@ -68,12 +61,14 @@ public class EntityActor extends Actor
           int ty = (int) y/16;
           Tile T = MapScreen.mygame.map.tiles[tx][ty];
 		  if(entity.exhausted == false && entity.MoveCheck(T))
-		  {  
+		  {
+			  
 		  entity.sprite.setPosition(x, y);
 		  setBounds(entity.sprite.getX(), entity.sprite.getY(), entity.sprite.getWidth(), entity.sprite.getHeight());
 		  //coords and entity movement
-		  entity.Move(T);
 		  
+		  entity.Move(T);
+		  System.out.println("X: " + tx + " Y: " + ty);
 		  }
 		  else
 		  {
@@ -105,6 +100,7 @@ public class EntityActor extends Actor
 			  if(entityActors.get(i).entity.commander == "Dead")
 			  {
 				  entityActors.get(i).remove();
+				  entityActors.removeIndex(i);
 			  }
 		  }
 		  
